@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import Hero from './components/hero';
 import Navbar from './components/navbar';
 
 
@@ -7,6 +8,8 @@ class App extends Component{
     return (
       <div>
         <Navbar />
+        <Hero />
+        
       </div>
     )
   }
