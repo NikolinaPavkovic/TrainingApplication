@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import Hero from './components/hero';
+import Info from './components/info';
 import Navbar from './components/navbar';
 
 
@@ -9,7 +10,7 @@ class App extends Component{
       <div>
         <Navbar />
         <Hero />
-        
+        <Info />
       </div>
     )
   }
