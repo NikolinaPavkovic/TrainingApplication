@@ -3,7 +3,7 @@ import Typed from 'react-typed';
 
 const Hero = () => {
     return(
-        <div className=''>
+        <div id='home'>
             <div className='max-w-[800px] mt-[-96px] w-full h-screen text-center mx-auto flex flex-col justify-center'>
                 <p className='text-orange-600 font-bold p-4 uppercase'>Najsavremenija teretana u gradu</p>
                 <h1 className='md:text-7xl sm:text-6xl text-4xl font-bold md:py-6'>Tvoj prvi korak ka zdravom načinu života.</h1>

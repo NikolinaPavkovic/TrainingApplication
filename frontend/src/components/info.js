@@ -3,7 +3,7 @@ import Vezba from '../assets/img1.jpg'
 
 const Info = () => {
     return (
-        <div className='w-full bg-gray-500 py-16 px-4'>
+        <div className='w-full bg-gray-500 py-16 px-4' id='about'>
             <div className='max-w-[1240px] mx-auto grid md:grid-cols-2'>
                 <img className='p-4' src={Vezba} alt="/" />
                 <div className='flex flex-col justify-center p-2 gap-2'>
