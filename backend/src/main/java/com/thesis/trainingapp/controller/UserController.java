@@ -5,12 +5,15 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.thesis.trainingapp.dto.RegisterDTO;
+import com.thesis.trainingapp.filter.CustomAuthorizationFilter;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
 import com.thesis.trainingapp.service.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -36,15 +39,22 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/register").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveUser(user));
+    public ResponseEntity<String> registerUser(@RequestBody RegisterDTO userDTO){
+        User u = userService.saveUser(userDTO);
+        if(u == null){
+            return new ResponseEntity<>("Username already exists!", HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>("User created!", HttpStatus.CREATED);
     }
 
     @PostMapping("/saveRole")
-    public ResponseEntity<Role> saveRole(@RequestBody Role role){
+    public ResponseEntity<String> saveRole(@RequestBody Role role){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/saveRole").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveRole(role));
+        Role r = userService.saveRole(role);
+        if(r == null) {
+            return new ResponseEntity<>("Role already exists!", HttpStatus.NO_CONTENT);
+        }
+        return ResponseEntity.created(uri).body("Role created!");
     }
 
     @PostMapping("/addRoleToUser")
@@ -77,12 +87,7 @@ public class UserController {
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 
             } catch (Exception exception){
-                response.setHeader("error", exception.getMessage());
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                Map<String, String> error = new HashMap<>();
-                error.put("error_message", exception.getMessage());
-                response.setContentType(APPLICATION_JSON_VALUE);
-                new ObjectMapper().writeValue(response.getOutputStream(), error);
+                CustomAuthorizationFilter.setHeaders(response, exception);
             }
         } else {
             throw new RuntimeException("Refresh token is missing");

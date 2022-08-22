@@ -1,11 +1,13 @@
 package com.thesis.trainingapp.service;
 
+import com.thesis.trainingapp.dto.RegisterDTO;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
 import com.thesis.trainingapp.repository.RoleRepository;
 import com.thesis.trainingapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -44,17 +47,42 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User saveUser(User user) {
+    public User saveUser(RegisterDTO userDTO) {
         //add validation and error handling
-        log.info("Saving new user: {} to database", user.getUsername());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if(checkIfUsernameExists(userDTO.getUsername())) return null;
+        log.info("Saving new user: {} to database", userDTO.getUsername());
+        User user = modelMapper.map(userDTO, User.class);
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        Role role = roleRepository.findByName("ROLE_USER");
+        user.getRoles().add(role);
         return userRepository.save(user);
+    }
+
+    private User prepareForSave(RegisterDTO dto) {
+        User user = modelMapper.map(dto, User.class);
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        Role role = roleRepository.findByName("ROLE_USER");
+        user.getRoles().add(role);
+        return user;
+    }
+
+    private boolean checkIfUsernameExists(String username) {
+        User u = userRepository.findByUsername(username);
+        if (u == null) return false;
+        return true;
     }
 
     @Override
     public Role saveRole(Role role) {
+        if(checkIfRoleExists(role.getName())) return null;
         log.info("Saving new role: {} to database", role.getName());
         return roleRepository.save(role);
+    }
+
+    private boolean checkIfRoleExists(String name) {
+        Role r = roleRepository.findByName(name);
+        if(r == null) return false;
+        return true;
     }
 
     @Override
@@ -67,7 +95,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User getUser(String username) {
-        log.info("Fetching user: {} from database");
+        log.info("Fetching user: {} from database", username);
         return userRepository.findByUsername(username);
     }
 
@@ -75,6 +103,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<User> getUsers() {
         log.info("Fetching all users");
         return userRepository.findAll();
+    }
+
+    @Override
+    public User registerTrainer(User user) {
+        log.info("Registering trainer...");
+        return  null;
     }
 
 }
