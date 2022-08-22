@@ -5,8 +5,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.thesis.trainingapp.dto.NewPasswordDTO;
 import com.thesis.trainingapp.dto.RegisterDTO;
-import com.thesis.trainingapp.dto.UserDto;
+import com.thesis.trainingapp.dto.UserDTO;
 import com.thesis.trainingapp.filter.CustomAuthorizationFilter;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
@@ -47,7 +48,7 @@ public class UserController {
         if(u == null){
             return new ResponseEntity<>("Username already exists!", HttpStatus.OK);
         }
-        return new ResponseEntity<>("User created!", HttpStatus.CREATED);
+        return new ResponseEntity<>("User created.", HttpStatus.CREATED);
     }
 
     @PostMapping("/registerTrainer")
@@ -57,21 +58,29 @@ public class UserController {
         if(u == null){
             return new ResponseEntity<>("Username already exists!", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("User created!", HttpStatus.CREATED);
+        return new ResponseEntity<>("User created.", HttpStatus.CREATED);
     }
 
     @GetMapping("/getLoggedUser")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<UserDto> getLoggedUser(Principal user){
+    public ResponseEntity<UserDTO> getLoggedUser(Principal user){
         return ResponseEntity.ok().body(this.userService.getLoggedUser(user.getName()));
     }
 
     @PutMapping("/edit")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<String> editUser(@RequestBody UserDto dto, Principal user){
+    public ResponseEntity<String> editUser(@RequestBody UserDTO dto, Principal user){
         User u = this.userService.editUser(dto, user.getName());
         if(u == null) return ResponseEntity.status(409).body("Username already exists!");
-        return ResponseEntity.ok().body("User edited!");
+        return ResponseEntity.ok().body("User edited.");
+    }
+
+    @PutMapping("/changePassword")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<String> changePassword(@RequestBody NewPasswordDTO passwordDTO, Principal user){
+        User u = userService.changePassword(passwordDTO, user.getName());
+        if(u == null) return ResponseEntity.status(409).body("Wrong current password");
+        return ResponseEntity.ok().body("Password changed.");
     }
 
 

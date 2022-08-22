@@ -1,7 +1,8 @@
 package com.thesis.trainingapp.service;
 
+import com.thesis.trainingapp.dto.NewPasswordDTO;
 import com.thesis.trainingapp.dto.RegisterDTO;
-import com.thesis.trainingapp.dto.UserDto;
+import com.thesis.trainingapp.dto.UserDTO;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
 import com.thesis.trainingapp.repository.RoleRepository;
@@ -104,7 +105,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User editUser(UserDto dto, String currentUsername) {
+    public User editUser(UserDTO dto, String currentUsername) {
         User user = userRepository.findByUsername(currentUsername);
         user.setFirstname(dto.getFirstname());
         user.setLastname(dto.getLastname());
@@ -117,15 +118,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void changePassword() {
-
+    public User changePassword(NewPasswordDTO dto, String username) {
+        User user = userRepository.findByUsername(username);
+        if(!passwordEncoder.matches(dto.getOldPassword(), user.getPassword())) return null;
+        user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+        return userRepository.save(user);
     }
 
     @Override
-    public UserDto getLoggedUser(String username) {
-        User u = userRepository.findByUsername(username);
-        UserDto dto = modelMapper.map(u, UserDto.class);
-        return new UserDto(u.getFirstname(), u.getLastname(), u.getUsername(), u.getPhone());
+    public UserDTO getLoggedUser(String username) {
+        return modelMapper.map(userRepository.findByUsername(username), UserDTO.class);
     }
 
 }
