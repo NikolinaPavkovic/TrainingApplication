@@ -1,6 +1,7 @@
 package com.thesis.trainingapp.service;
 
 import com.thesis.trainingapp.dto.RegisterDTO;
+import com.thesis.trainingapp.dto.UserDto;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
 
@@ -12,4 +13,7 @@ public interface UserService {
     void addRoleToUser(String username, String roleName);
     User getUser(String username);
     List<User> getUsers();
+    User editUser(UserDto dto, String currentUsername);
+    void changePassword();
+    UserDto getLoggedUser(String username);
 }

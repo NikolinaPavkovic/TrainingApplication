@@ -1,6 +1,7 @@
 package com.thesis.trainingapp.service;
 
 import com.thesis.trainingapp.dto.RegisterDTO;
+import com.thesis.trainingapp.dto.UserDto;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
 import com.thesis.trainingapp.repository.RoleRepository;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User saveUser(RegisterDTO userDTO, String role) {
         //add validation and error handling
-        if(checkIfUsernameExists(userDTO.getUsername())) return null;
+        if(usernameExists(userDTO.getUsername())) return null;
         log.info("Saving new user: {} to database", userDTO.getUsername());
         User user = prepareForSave(userDTO, role);
         return userRepository.save(user);
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return user;
     }
 
-    private boolean checkIfUsernameExists(String username) {
+    private boolean usernameExists(String username) {
         User u = userRepository.findByUsername(username);
         if (u == null) return false;
         return true;
@@ -71,12 +72,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Role saveRole(Role role) {
-        if(checkIfRoleExists(role.getName())) return null;
+        if(roleExists(role.getName())) return null;
         log.info("Saving new role: {} to database", role.getName());
         return roleRepository.save(role);
     }
 
-    private boolean checkIfRoleExists(String name) {
+    private boolean roleExists(String name) {
         Role r = roleRepository.findByName(name);
         if(r == null) return false;
         return true;
@@ -100,6 +101,31 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<User> getUsers() {
         log.info("Fetching all users");
         return userRepository.findAll();
+    }
+
+    @Override
+    public User editUser(UserDto dto, String currentUsername) {
+        User user = userRepository.findByUsername(currentUsername);
+        user.setFirstname(dto.getFirstname());
+        user.setLastname(dto.getLastname());
+        user.setPhone(dto.getPhone());
+        if(dto.getUsername() != currentUsername) {
+            if(usernameExists(dto.getUsername())) return null;
+            user.setUsername(dto.getUsername());
+        }
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void changePassword() {
+
+    }
+
+    @Override
+    public UserDto getLoggedUser(String username) {
+        User u = userRepository.findByUsername(username);
+        UserDto dto = modelMapper.map(u, UserDto.class);
+        return new UserDto(u.getFirstname(), u.getLastname(), u.getUsername(), u.getPhone());
     }
 
 }

@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thesis.trainingapp.dto.RegisterDTO;
+import com.thesis.trainingapp.dto.UserDto;
 import com.thesis.trainingapp.filter.CustomAuthorizationFilter;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,26 +45,42 @@ public class UserController {
     public ResponseEntity<String> registerUser(@RequestBody RegisterDTO userDTO){
         User u = userService.saveUser(userDTO, "ROLE_USER");
         if(u == null){
-            return new ResponseEntity<>("Username already exists!", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Username already exists!", HttpStatus.OK);
         }
         return new ResponseEntity<>("User created!", HttpStatus.CREATED);
     }
 
     @PostMapping("/registerTrainer")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> registerTrainer(@RequestBody RegisterDTO userDTO){
         User u = userService.saveUser(userDTO, "ROLE_TRAINER");
         if(u == null){
-            return new ResponseEntity<>("Username already exists!", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Username already exists!", HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>("User created!", HttpStatus.CREATED);
     }
+
+    @GetMapping("/getLoggedUser")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<UserDto> getLoggedUser(Principal user){
+        return ResponseEntity.ok().body(this.userService.getLoggedUser(user.getName()));
+    }
+
+    @PutMapping("/edit")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<String> editUser(@RequestBody UserDto dto, Principal user){
+        User u = this.userService.editUser(dto, user.getName());
+        if(u == null) return ResponseEntity.status(409).body("Username already exists!");
+        return ResponseEntity.ok().body("User edited!");
+    }
+
 
     @PostMapping("/saveRole")
     public ResponseEntity<String> saveRole(@RequestBody Role role){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/saveRole").toUriString());
         Role r = userService.saveRole(role);
         if(r == null) {
-            return new ResponseEntity<>("Role already exists!", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Role already exists!", HttpStatus.CONFLICT);
         }
         return ResponseEntity.created(uri).body("Role created!");
     }
