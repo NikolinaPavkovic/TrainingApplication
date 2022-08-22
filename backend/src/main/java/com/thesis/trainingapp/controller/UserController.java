@@ -40,7 +40,16 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody RegisterDTO userDTO){
-        User u = userService.saveUser(userDTO);
+        User u = userService.saveUser(userDTO, "ROLE_USER");
+        if(u == null){
+            return new ResponseEntity<>("Username already exists!", HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>("User created!", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/registerTrainer")
+    public ResponseEntity<String> registerTrainer(@RequestBody RegisterDTO userDTO){
+        User u = userService.saveUser(userDTO, "ROLE_TRAINER");
         if(u == null){
             return new ResponseEntity<>("Username already exists!", HttpStatus.NO_CONTENT);
         }

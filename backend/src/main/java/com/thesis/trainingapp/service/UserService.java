@@ -7,10 +7,9 @@ import com.thesis.trainingapp.model.User;
 import java.util.List;
 
 public interface UserService {
-    User saveUser(RegisterDTO user);
+    User saveUser(RegisterDTO user, String roleName);
     Role saveRole(Role role);
     void addRoleToUser(String username, String roleName);
     User getUser(String username);
     List<User> getUsers();
-    User registerTrainer(User user);
 }

@@ -47,21 +47,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User saveUser(RegisterDTO userDTO) {
+    public User saveUser(RegisterDTO userDTO, String role) {
         //add validation and error handling
         if(checkIfUsernameExists(userDTO.getUsername())) return null;
         log.info("Saving new user: {} to database", userDTO.getUsername());
-        User user = modelMapper.map(userDTO, User.class);
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        Role role = roleRepository.findByName("ROLE_USER");
-        user.getRoles().add(role);
+        User user = prepareForSave(userDTO, role);
         return userRepository.save(user);
     }
 
-    private User prepareForSave(RegisterDTO dto) {
+    private User prepareForSave(RegisterDTO dto, String roleName) {
         User user = modelMapper.map(dto, User.class);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        Role role = roleRepository.findByName("ROLE_USER");
+        Role role = roleRepository.findByName(roleName);
         user.getRoles().add(role);
         return user;
     }
@@ -103,12 +100,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<User> getUsers() {
         log.info("Fetching all users");
         return userRepository.findAll();
-    }
-
-    @Override
-    public User registerTrainer(User user) {
-        log.info("Registering trainer...");
-        return  null;
     }
 
 }
