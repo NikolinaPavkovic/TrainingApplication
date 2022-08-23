@@ -1,11 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import QR from '../../assets/qr.png';
 import {AiOutlineEdit} from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo.jpg'
+import QRCode from 'qrcode';
 
 const UserProfile = () => {
     const [isEditting, setIsEdditing] = useState(false);
+    const [codeText, setCodeText] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
+
+    useEffect(() => {
+        setCodeText('pavkovicn@hotmail.com');
+        generateQrCode();
+    }, [codeText])
+
+    const generateQrCode = async () => {
+        try {
+            const response = await QRCode.toDataURL(codeText);
+            setImageUrl(response);
+        } catch (error) {
+            
+        }
+    }
+
     const editProfile = () => {
         setIsEdditing(!isEditting);
     }
@@ -27,7 +44,7 @@ const UserProfile = () => {
                         <p className='text-gray-500'>0658886407</p>
                     </div>
                     <div class='mt-12 flex flex-col justify-center'>
-                        <img src={QR} alt='/' />
+                        <img src={imageUrl} alt='/' />
                     </div>
                 </div>
             </div> :

@@ -6,6 +6,7 @@ import Login from './components/pages/loginPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Register from './components/pages/registerPage';
 import UserProfile from './components/pages/userProfilePage';
+import QRCodeScanner from './components/qrCodeScanner';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,6 +16,7 @@ root.render(
       <Route path='login' element={<Login />} />
       <Route path='register' element={<Register />} />
       <Route path='profile' element={<UserProfile />} />
+      <Route path='scan' element={<QRCodeScanner />} />
     </Routes>
   </BrowserRouter>
 );
