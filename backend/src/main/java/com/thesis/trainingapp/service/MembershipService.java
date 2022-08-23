@@ -8,4 +8,5 @@ import java.util.List;
 public interface MembershipService {
     Membership saveMembreship(MembershipDTO membership);
     List<Membership> getMemberships();
+    Membership getById(Long id);
 }

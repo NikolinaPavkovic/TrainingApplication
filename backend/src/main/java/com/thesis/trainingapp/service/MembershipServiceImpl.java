@@ -1,6 +1,7 @@
 package com.thesis.trainingapp.service;
 
 import com.thesis.trainingapp.dto.MembershipDTO;
+import com.thesis.trainingapp.exception.MembershipNotFoundException;
 import com.thesis.trainingapp.model.Benefit;
 import com.thesis.trainingapp.model.Membership;
 import com.thesis.trainingapp.repository.BenefitRepository;
@@ -11,9 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -32,12 +31,12 @@ public class MembershipServiceImpl implements MembershipService{
         return membershipRepository.save(membership);
     }
 
-    private List<Benefit> setMembershipBenefits(MembershipDTO dto) {
+    private Set<Benefit> setMembershipBenefits(MembershipDTO dto) {
         List<Benefit> benefits = new ArrayList<>();
         for (String benefit : dto.getBenefits()) {
             benefits.add(benefitRepository.findByName(benefit));
         }
-        return benefits;
+        return (Set<Benefit>) benefits;
     }
 
     private void saveBenefits(String[] benefits){
@@ -51,5 +50,14 @@ public class MembershipServiceImpl implements MembershipService{
     @Override
     public List<Membership> getMemberships() {
         return membershipRepository.findAll();
+    }
+
+    @Override
+    public Membership getById(Long id) {
+        Optional<Membership> membership = membershipRepository.findById(id);
+        if(membership.isPresent()){
+            return modelMapper.map(membership.get(), Membership.class);
+        }
+        return null;
     }
 }

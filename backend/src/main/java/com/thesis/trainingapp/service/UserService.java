@@ -17,4 +17,5 @@ public interface UserService {
     User editUser(UserDTO dto, String currentUsername);
     User changePassword(NewPasswordDTO dto, String username);
     UserDTO getLoggedUser(String username);
+    User getById(Long id);
 }

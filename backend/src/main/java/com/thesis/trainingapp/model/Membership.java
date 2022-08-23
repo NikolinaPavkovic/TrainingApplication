@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "memberships")
@@ -29,5 +30,5 @@ public class Membership {
     private Integer durationInDays;
 
     @ManyToMany(targetEntity = Benefit.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
-    private Collection<Benefit> benefits;
+    private Set<Benefit> benefits;
 }

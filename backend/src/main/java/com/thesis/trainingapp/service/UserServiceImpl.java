@@ -3,6 +3,7 @@ package com.thesis.trainingapp.service;
 import com.thesis.trainingapp.dto.NewPasswordDTO;
 import com.thesis.trainingapp.dto.RegisterDTO;
 import com.thesis.trainingapp.dto.UserDTO;
+import com.thesis.trainingapp.exception.UserNotFoundException;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
 import com.thesis.trainingapp.repository.RoleRepository;
@@ -18,9 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.awt.desktop.OpenFilesEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -128,6 +131,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDTO getLoggedUser(String username) {
         return modelMapper.map(userRepository.findByUsername(username), UserDTO.class);
+    }
+
+    @Override
+    public User getById(Long id) {
+        Optional<User> u = userRepository.findById(id);
+        if(u.isPresent()){
+            return modelMapper.map(u.get(), User.class);
+        }
+        throw new UserNotFoundException();
     }
 
 }

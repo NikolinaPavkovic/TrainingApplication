@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -36,5 +37,5 @@ public class User {
     private String password;
 
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
-    private Collection<Role> roles = new ArrayList<>();
+    private Set<Role> roles;
 }
