@@ -9,3 +9,43 @@ INSERT INTO users VALUES (nextval('user_seq_gen'), 'Marija', 'Maric', '$2a$10$Oj
 INSERT INTO users_roles VALUES (1,1);
 INSERT INTO users_roles VALUES (2,3);
 INSERT INTO users_roles VALUES (3,2);
+
+INSERT INTO benefits VALUES (nextval('benefit_seq_gen'), 'Neograničeno korišćenje teretane 30 dana');
+INSERT INTO benefits VALUES (nextval('benefit_seq_gen'), 'Neograničeno posećivanje grupnih treninga 30 dana');
+INSERT INTO benefits VALUES (nextval('benefit_seq_gen'), 'Preko 40 kardio sprava');
+INSERT INTO benefits VALUES (nextval('benefit_seq_gen'), 'Uvodni trening');
+INSERT INTO benefits VALUES (nextval('benefit_seq_gen'), 'Savetovanje');
+INSERT INTO benefits VALUES (nextval('benefit_seq_gen'), 'Neograničeno korišćenje teretane 90 dana');
+INSERT INTO benefits VALUES (nextval('benefit_seq_gen'), 'Neograničeno posećivanje grupnih treninga 90 dana');
+
+INSERT INTO memberships VALUES (nextval('membership_seq_gen'), 30, 'Code 30 gym', 2500);
+INSERT INTO memberships VALUES (nextval('membership_seq_gen'), 30, 'Code 30 grupni treninzi', 2500);
+INSERT INTO memberships VALUES (nextval('membership_seq_gen'), 30, 'Code 30 gym + grupni treninzi', 3000);
+INSERT INTO memberships VALUES (nextval('membership_seq_gen'), 90, 'Code 90 gym', 6000);
+INSERT INTO memberships VALUES (nextval('membership_seq_gen'), 90, 'Code 90 grupni treninzi', 6000);
+INSERT INTO memberships VALUES (nextval('membership_seq_gen'), 90, 'Code 90 gym + grupni treninzi', 7500);
+
+INSERT INTO memberships_benefits VALUES (1,1);
+INSERT INTO memberships_benefits VALUES (1,3);
+INSERT INTO memberships_benefits VALUES (1,4);
+INSERT INTO memberships_benefits VALUES (1,5);
+INSERT INTO memberships_benefits VALUES (2,2);
+INSERT INTO memberships_benefits VALUES (2,4);
+INSERT INTO memberships_benefits VALUES (2,5);
+INSERT INTO memberships_benefits VALUES (3,1);
+INSERT INTO memberships_benefits VALUES (3,2);
+INSERT INTO memberships_benefits VALUES (3,3);
+INSERT INTO memberships_benefits VALUES (3,4);
+INSERT INTO memberships_benefits VALUES (3,5);
+INSERT INTO memberships_benefits VALUES (4,6);
+INSERT INTO memberships_benefits VALUES (4,3);
+INSERT INTO memberships_benefits VALUES (4,4);
+INSERT INTO memberships_benefits VALUES (4,5);
+INSERT INTO memberships_benefits VALUES (5,7);
+INSERT INTO memberships_benefits VALUES (5,4);
+INSERT INTO memberships_benefits VALUES (5,5);
+INSERT INTO memberships_benefits VALUES (6,6);
+INSERT INTO memberships_benefits VALUES (6,7);
+INSERT INTO memberships_benefits VALUES (6,3);
+INSERT INTO memberships_benefits VALUES (6,4);
+INSERT INTO memberships_benefits VALUES (6,5);
