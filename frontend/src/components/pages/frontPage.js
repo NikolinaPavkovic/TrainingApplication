@@ -4,9 +4,9 @@ import Footer from '../footer';
 import Hero from '../hero';
 import Info from '../info';
 import Navbar from '../navbar';
-import { Link } from 'react-router-dom';
 
 const FrontPage = () => {
+    
     return (
         <div>
             <Navbar />

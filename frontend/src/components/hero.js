@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 import Typed from 'react-typed';
 
 const Hero = () => {
+    const navigate = useNavigate();
+
     return(
         <div id='home'>
             <div className='max-w-[800px] mt-[-96px] w-full h-screen text-center mx-auto flex flex-col justify-center'>
@@ -20,7 +23,7 @@ const Hero = () => {
                 <p className='md:text-2xl text-xl font-bold text-gray-500'>
                 Nudimo veliki broj paketa da možete pronaći paket koji odgovara baš vašim potrebama.
                 </p>
-                <button className='bg-orange-500 w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-white'>Postani član</button>
+                <button className='bg-orange-500 w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-white' onClick={()=> {navigate('/register')}}>Postani član</button>
             </div>
         </div>
     )

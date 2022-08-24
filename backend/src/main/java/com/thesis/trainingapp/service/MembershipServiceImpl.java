@@ -42,7 +42,6 @@ public class MembershipServiceImpl implements MembershipService{
     private void saveBenefits(String[] benefits){
         for (String benefit : benefits) {
             if(benefitRepository.findByName(benefit) != null) continue;
-            System.out.println("UPISUJE:" + benefit);
             benefitRepository.save(new Benefit(null, benefit));
         }
     }

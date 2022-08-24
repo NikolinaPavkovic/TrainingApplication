@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Register from './components/pages/registerPage';
 import UserProfile from './components/pages/userProfilePage';
 import QRCodeScanner from './components/qrCodeScanner';
+import AccessDenied from './components/pages/accessDeniedPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
       <Route path='register' element={<Register />} />
       <Route path='profile' element={<UserProfile />} />
       <Route path='scan' element={<QRCodeScanner />} />
+      <Route path='accessDenied' element={<AccessDenied />} />
     </Routes>
   </BrowserRouter>
 );

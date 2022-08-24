@@ -23,6 +23,6 @@ public class MembershipController {
     @PostMapping
     public ResponseEntity<String> saveMembership(@RequestBody MembershipDTO dto) {
         membershipService.saveMembreship(dto);
-        return ResponseEntity.ok().body("Membership saved!");
+        return ResponseEntity.ok().body("Membership saved");
     }
 }

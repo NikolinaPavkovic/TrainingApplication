@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 import Vezba from '../assets/img1.jpg'
 
 const Info = () => {
+    const navigate = useNavigate();
     return (
         <div className='w-full bg-gray-500 py-16 px-4' id='about'>
             <div className='max-w-[1240px] mx-auto grid md:grid-cols-2'>
@@ -22,7 +24,7 @@ const Info = () => {
                     Sigurni smo da će jedan dolazak u No Limit Gym ostaviti najbolji prvi utisak 
                     i podići vaša očekivanja na najviši nivo.
                     </p>
-                    <button className='bg-orange-500 w-[200px] rounded-md font-medium my-3 mx-auto md:mx-0 py-3 text-white'>Postani član</button>
+                    <button className='bg-orange-500 w-[200px] rounded-md font-medium my-3 mx-auto md:mx-0 py-3 text-white' onClick={() => {navigate('/register')}}>Postani član</button>
                 </div>
             </div>
         </div>

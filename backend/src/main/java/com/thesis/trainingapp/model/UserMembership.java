@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @Entity
-@Table(name = "user_membership")
+@Table(name = "user_memberships")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
