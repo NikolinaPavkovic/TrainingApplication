@@ -29,8 +29,8 @@ const QRCodeScanner = () => {
             <Navbar />
         <div className='p-16 max-w-[1240] flex justify-center items-center bg-gray-500 min-h-screen'>
             <div className='p-8 max-w-[600px] rounded-xl bg-white w-[100vh]'>
-                <div class='mt-10 text-center border-b pb-12'>
-                    <h1 class='text-4xl font-medium text-gray-700'>Skeniraj QR kod</h1>
+                <div className='mt-10 text-center border-b pb-12'>
+                    <h1 className='text-4xl font-medium text-gray-700'>Skeniraj QR kod</h1>
                 </div>
                 <QrReader 
                     delay={300}
