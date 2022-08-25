@@ -8,6 +8,56 @@ import Register from './components/pages/registerPage';
 import UserProfile from './components/pages/userProfilePage';
 import QRCodeScanner from './components/qrCodeScanner';
 import AccessDenied from './components/pages/accessDeniedPage';
+import axios from 'axios';
+
+axios.interceptors.request.use(
+  request => {
+    console.log(request.url)
+    const token = localStorage.getItem("access_token");
+    const refreshToken = localStorage.getItem("refresh_token")
+    if(token) {
+      request.headers['Authorization'] = 'Bearer ' + token
+    }
+    if(refreshToken && request.url == "http://localhost:8080/users/token/refresh") {
+      request.headers['Authorization'] = 'Bearer ' + refreshToken
+    }
+    return request
+  },
+  error => {
+    Promise.reject(error)
+  }
+)
+
+axios.interceptors.response.use(
+  
+  response => {
+    return response
+  },
+
+  function(error) {
+    const originalRequest = error.config 
+    if(error.response.status === 401 &&
+      originalRequest.url === 'http://localhost:3000/users/token/refresh') 
+      {
+        window.location.href('/login');
+      }
+
+    if(error.response.status === 403 &&
+      !originalRequest._retry)
+      {
+        originalRequest._retry = true
+        return axios.get('http://localhost:8080/users/token/refresh',)
+                    .then(res => {
+                      if(res.status === 200) {
+                        localStorage.setItem('access_token', res.data.access_token)
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token')
+                      }
+                    })
+      }
+      return Promise.reject(error)
+
+  }
+)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
