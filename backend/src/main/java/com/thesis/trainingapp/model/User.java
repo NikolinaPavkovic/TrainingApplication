@@ -37,5 +37,5 @@ public class User {
     private String password;
 
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
-    private Set<Role> roles;
+    private Collection<Role> roles = new ArrayList<>();
 }

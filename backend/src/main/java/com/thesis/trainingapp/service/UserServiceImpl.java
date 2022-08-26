@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -130,7 +131,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDTO getLoggedUser(String username) {
-        return modelMapper.map(userRepository.findByUsername(username), UserDTO.class);
+        User user = userRepository.findByUsername(username);
+        UserDTO dto = modelMapper.map(user, UserDTO.class);
+        dto.setRoles(user.getRoles().stream().map(i -> i.getName()).collect(Collectors.toList()));
+        return dto;
     }
 
     @Override

@@ -35,4 +35,10 @@ public class UserMembershipServiceImpl implements UserMembershipService{
        Membership membership = membershipService.getById(userMembershipDTO.getMembershipId());
        return userMembershipRepository.save(new UserMembership(null, new Date(), user, membership));
     }
+
+    @Override
+    public UserMembership get(String username) {
+        System.out.println(userMembershipRepository.getUserMembershipsByUserUsername(username));
+        return userMembershipRepository.getUserMembershipsByUserUsername(username);
+    }
 }

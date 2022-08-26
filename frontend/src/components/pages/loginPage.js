@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import Logo from '../../assets/logo.jpg'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const SERVER_URL = process.env.REACT_APP_API;
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(SERVER_URL + '/users/getLoggedUser')
         .then(response => {
-            console.log(response.data);
+            if(response?.status !== 204) {
+                navigate('/profile');
+            }
+        }).catch(response => {
+            console.log(response);
         })
       }, [])
 
     const login = (e) => {
         e.preventDefault();
-        try {
             axios.post(SERVER_URL + '/login', new URLSearchParams({
                 username: username,
                 password: password
@@ -24,10 +29,10 @@ const Login = () => {
             .then(response => {
                 localStorage.setItem('access_token', response.data.access_token);
                 localStorage.setItem('refresh_token', response.data.refresh_token);
+                navigate('/profile');
+            }).catch(reason => {
+                console.log(reason);
             })
-        } catch (error) {
-            console.log(error.response)
-        }
     }
     return(
         <div className='max-w-[1240] min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-gray-500'>

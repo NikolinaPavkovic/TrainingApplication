@@ -18,7 +18,7 @@ public class UserMembershipController {
 
     @GetMapping
     public ResponseEntity<List<UserMembership>> getUserMemberships(){
-        List<UserMembership> mems = userMembershipService.getMemberships();
+        //List<UserMembership> mems = userMembershipService.getMemberships();
         return ResponseEntity.ok().body(userMembershipService.getMemberships());
     }
 
@@ -26,6 +26,11 @@ public class UserMembershipController {
     public ResponseEntity<String> addUserMembership(@RequestBody UserMembershipDTO dto) {
         userMembershipService.save(dto);
         return new ResponseEntity<>("User membership created!", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/get/{username}")
+    public ResponseEntity<UserMembership> getUserMembership(@PathVariable String username){
+        return ResponseEntity.ok().body(userMembershipService.get(username));
     }
 
 }

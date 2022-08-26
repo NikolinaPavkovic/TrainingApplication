@@ -64,6 +64,9 @@ public class UserController {
     @GetMapping("/getLoggedUser")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDTO> getLoggedUser(Principal user){
+        if(user == null) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok().body(this.userService.getLoggedUser(user.getName()));
     }
 

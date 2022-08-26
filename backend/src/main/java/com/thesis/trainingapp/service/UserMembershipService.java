@@ -8,4 +8,5 @@ import java.util.List;
 public interface UserMembershipService {
     List<UserMembership> getMemberships();
     UserMembership save(UserMembershipDTO userMembershipDTO);
+    UserMembership get(String username);
 }
