@@ -10,7 +10,7 @@ import Logo from '../assets/logo.jpg'
 
 const Footer = () =>{
     return (
-        <div className='max-w-[1240] mx-auto bg-gray-500 py-16 md:px-40 px-4 grid lg:grid-cols-3 gap-8 text-white' id='contact'>
+        <div className='max-w-[1240] mx-auto bg-black py-8 md:px-40 px-4 grid lg:grid-cols-3 gap-8 text-white' id='contact'>
             <div>
                 <img src={Logo} alt='/' className='md:w-72'/>
             </div>

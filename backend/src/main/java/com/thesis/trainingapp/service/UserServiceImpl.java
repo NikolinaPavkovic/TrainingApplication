@@ -3,6 +3,7 @@ package com.thesis.trainingapp.service;
 import com.thesis.trainingapp.dto.NewPasswordDTO;
 import com.thesis.trainingapp.dto.RegisterDTO;
 import com.thesis.trainingapp.dto.UserDTO;
+import com.thesis.trainingapp.dto.UsersWithMembershipDTO;
 import com.thesis.trainingapp.exception.UserNotFoundException;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
@@ -20,10 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.awt.desktop.OpenFilesEvent;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -103,9 +101,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<UserDTO> getUsers() {
         log.info("Fetching all users");
-        return userRepository.findAll();
+        List<User> allUsers = userRepository.findAll();
+        List<UserDTO> dtos = new ArrayList<>();
+        for (User u : allUsers) {
+            dtos.add(getUserDTO(u.getUsername()));
+        }
+        dtos.remove(0);
+        return dtos;
     }
 
     @Override
@@ -130,7 +134,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDTO getLoggedUser(String username) {
+    public UserDTO getUserDTO(String username) {
         User user = userRepository.findByUsername(username);
         UserDTO dto = modelMapper.map(user, UserDTO.class);
         dto.setRoles(user.getRoles().stream().map(i -> i.getName()).collect(Collectors.toList()));
@@ -145,5 +149,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         throw new UserNotFoundException();
     }
+
+    @Override
+    public List<UserDTO> searchUsers(String[] searchParams) {
+        List<UserDTO> users = getUsers();
+        List<UserDTO> searchResult = new ArrayList<>();
+        for (UserDTO dto : users) {
+            for(String param : searchParams) {
+                if (dto.getFirstname().toLowerCase().contains(param.toLowerCase()) || dto.getLastname().toLowerCase().contains(param.toLowerCase()) || dto.getUsername().toLowerCase().contains(param.toLowerCase()) || dto.getPhone().toLowerCase().contains(param.toLowerCase())) {
+                    searchResult.add(dto);
+                }
+            }
+        }
+        return searchResult.stream().distinct().collect(Collectors.toList());
+    }
+
 
 }

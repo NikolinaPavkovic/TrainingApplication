@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thesis.trainingapp.dto.NewPasswordDTO;
 import com.thesis.trainingapp.dto.RegisterDTO;
 import com.thesis.trainingapp.dto.UserDTO;
+import com.thesis.trainingapp.dto.UsersWithMembershipDTO;
 import com.thesis.trainingapp.filter.CustomAuthorizationFilter;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
@@ -38,7 +39,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers(){
+    public ResponseEntity<List<UserDTO>> getUsers(){
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
@@ -49,6 +50,11 @@ public class UserController {
             return new ResponseEntity<>("Username already exists!", HttpStatus.OK);
         }
         return new ResponseEntity<>("User created.", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<UserDTO>> searchUsers(@RequestBody String[] searchParams) {
+        return ResponseEntity.ok().body(userService.searchUsers(searchParams));
     }
 
     @PostMapping("/registerTrainer")
@@ -67,7 +73,7 @@ public class UserController {
         if(user == null) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok().body(this.userService.getLoggedUser(user.getName()));
+        return ResponseEntity.ok().body(this.userService.getUserDTO(user.getName()));
     }
 
     @PutMapping("/edit")

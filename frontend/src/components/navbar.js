@@ -36,7 +36,7 @@ const Navbar = () => {
 
     return (
         <div>
-            {!isLogged && 
+            {isLogged && 
             <div>
                 <div className='flex justify-between items-center px-4 h-24 max-w-[1240px] mx-auto'>
                     <img src={Logo} alt='Code gym' />

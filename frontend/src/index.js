@@ -10,6 +10,7 @@ import QRCodeScanner from './components/qrCodeScanner';
 import AccessDenied from './components/pages/accessDeniedPage';
 import axios from 'axios';
 import Memberships from './components/pages/memberships';
+import UserList from './components/pages/userListPage';
 
 axios.interceptors.request.use(
   request => {
@@ -71,6 +72,7 @@ root.render(
       <Route path='scan' element={<QRCodeScanner />} />
       <Route path='accessDenied' element={<AccessDenied />} />
       <Route path='memberships' element={<Memberships />} />
+      <Route path='users' element={<UserList />} />
     </Routes>
   </BrowserRouter>
 );
