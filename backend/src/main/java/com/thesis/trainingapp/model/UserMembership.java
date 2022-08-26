@@ -28,4 +28,10 @@ public class UserMembership {
 
     @OneToOne(targetEntity = Membership.class, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Membership membership;
+
+    @Column(name = "end_date")
+    private Date endDate;
+
+    @Column(name = "is_expired")
+    private boolean isExpired;
 }

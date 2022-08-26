@@ -18,14 +18,13 @@ public class UserMembershipController {
 
     @GetMapping
     public ResponseEntity<List<UserMembership>> getUserMemberships(){
-        //List<UserMembership> mems = userMembershipService.getMemberships();
         return ResponseEntity.ok().body(userMembershipService.getMemberships());
     }
 
     @PostMapping
     public ResponseEntity<String> addUserMembership(@RequestBody UserMembershipDTO dto) {
-        userMembershipService.save(dto);
-        return new ResponseEntity<>("User membership created!", HttpStatus.CREATED);
+        if(userMembershipService.save(dto) == null) return new ResponseEntity<>("User membership already exists.", HttpStatus.OK);
+        return new ResponseEntity<>("User membership created.", HttpStatus.CREATED);
     }
 
     @GetMapping("/get/{username}")

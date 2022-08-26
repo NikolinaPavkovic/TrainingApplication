@@ -9,6 +9,7 @@ import UserProfile from './components/pages/userProfilePage';
 import QRCodeScanner from './components/qrCodeScanner';
 import AccessDenied from './components/pages/accessDeniedPage';
 import axios from 'axios';
+import Memberships from './components/pages/memberships';
 
 axios.interceptors.request.use(
   request => {
@@ -69,6 +70,7 @@ root.render(
       <Route path='profile' element={<UserProfile />} />
       <Route path='scan' element={<QRCodeScanner />} />
       <Route path='accessDenied' element={<AccessDenied />} />
+      <Route path='memberships' element={<Memberships />} />
     </Routes>
   </BrowserRouter>
 );

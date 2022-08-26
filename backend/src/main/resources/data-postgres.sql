@@ -50,4 +50,5 @@ INSERT INTO memberships_benefits VALUES (6,3);
 INSERT INTO memberships_benefits VALUES (6,4);
 INSERT INTO memberships_benefits VALUES (6,5);
 
-INSERT INTO user_memberships VALUES (nextval('user_mem_seq_gen'),'2022-08-25 15:10:49.239', 1, 3);
+INSERT INTO user_memberships VALUES (nextval('user_mem_seq_gen'),'2022-07-25 15:10:49.239', false, '2022-06-25 15:10:49.239', 1, 3);
+INSERT INTO user_memberships VALUES (nextval('user_mem_seq_gen'),'2022-09-25 15:10:49.239', false, '2022-08-25 15:10:49.239', 1, 3);

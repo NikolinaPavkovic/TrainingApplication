@@ -4,14 +4,13 @@ import com.thesis.trainingapp.dto.UserMembershipDTO;
 import com.thesis.trainingapp.model.Membership;
 import com.thesis.trainingapp.model.User;
 import com.thesis.trainingapp.model.UserMembership;
-import com.thesis.trainingapp.repository.MembershipRepository;
 import com.thesis.trainingapp.repository.UserMembershipRepository;
-import com.thesis.trainingapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -33,12 +32,39 @@ public class UserMembershipServiceImpl implements UserMembershipService{
     public UserMembership save(UserMembershipDTO userMembershipDTO) {
        User user = userService.getById(userMembershipDTO.getUserId());
        Membership membership = membershipService.getById(userMembershipDTO.getMembershipId());
-       return userMembershipRepository.save(new UserMembership(null, new Date(), user, membership));
+       if(checkIfHasMembership(user.getUsername())) return null;
+       return userMembershipRepository.save(new UserMembership(null, new Date(), user, membership, setEndDate(membership.getDurationInDays()), false));
+    }
+
+    private Date setEndDate(Integer days) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.DATE, days);
+        return c.getTime();
+    }
+
+    private boolean checkIfHasMembership(String username) {
+        UserMembership userMembership = get(username);
+        if(userMembership != null) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public UserMembership get(String username) {
-        System.out.println(userMembershipRepository.getUserMembershipsByUserUsername(username));
-        return userMembershipRepository.getUserMembershipsByUserUsername(username);
+        List<UserMembership> userMemberships = userMembershipRepository.getUnexpiredUserMembershipsByUserUsername(username);
+        return setExpiredMembershipsAndGetValidMembership(userMemberships);
+    }
+
+    private UserMembership setExpiredMembershipsAndGetValidMembership(List<UserMembership> memberships) {
+        UserMembership validMembership = null;
+        for (UserMembership membership : memberships) {
+            if (membership.getEndDate().before(new Date())) {
+                membership.setExpired(true);
+                userMembershipRepository.save(membership);
+            } else validMembership = membership;
+        }
+        return validMembership;
     }
 }
