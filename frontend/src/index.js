@@ -11,6 +11,7 @@ import AccessDenied from './components/pages/accessDeniedPage';
 import axios from 'axios';
 import Memberships from './components/pages/memberships';
 import UserList from './components/pages/userListPage';
+import RegisterTrainer from './components/pages/registerTrainerPage';
 
 axios.interceptors.request.use(
   request => {
@@ -73,6 +74,7 @@ root.render(
       <Route path='accessDenied' element={<AccessDenied />} />
       <Route path='memberships' element={<Memberships />} />
       <Route path='users' element={<UserList />} />
+      <Route path='registerTrainer' element={<RegisterTrainer />} />
     </Routes>
   </BrowserRouter>
 );

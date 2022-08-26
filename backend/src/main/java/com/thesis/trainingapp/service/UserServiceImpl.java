@@ -61,7 +61,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private User prepareForSave(RegisterDTO dto, String roleName) {
         User user = modelMapper.map(dto, User.class);
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        if(roleName == "ROLE_TRAINER") {
+            user.setPassword(passwordEncoder.encode(dto.getFirstname().toLowerCase() + "123"));
+        } else {
+            user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
         Role role = roleRepository.findByName(roleName);
         user.getRoles().add(role);
         return user;

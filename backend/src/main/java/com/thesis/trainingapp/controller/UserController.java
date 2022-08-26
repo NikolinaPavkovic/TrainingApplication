@@ -58,7 +58,7 @@ public class UserController {
     }
 
     @PostMapping("/registerTrainer")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> registerTrainer(@RequestBody RegisterDTO userDTO){
         User u = userService.saveUser(userDTO, "ROLE_TRAINER");
         if(u == null){
