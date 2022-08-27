@@ -36,8 +36,14 @@ public class MembershipServiceImpl implements MembershipService{
         for (String benefit : dto.getBenefits()) {
             benefits.add(benefitRepository.findByName(benefit));
         }
-        return (Set<Benefit>) benefits;
+        return convertToSet(benefits);
     }
+    
+    private Set<Benefit> convertToSet(List<Benefit> benefits){
+        Set<Benefit> benefitsSet = new HashSet<>();
+        for (Benefit benefit : benefits) benefitsSet.add(benefit);
+        return benefitsSet;
+    } 
 
     private void saveBenefits(String[] benefits){
         for (String benefit : benefits) {

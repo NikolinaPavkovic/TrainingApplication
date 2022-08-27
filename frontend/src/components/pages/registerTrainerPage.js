@@ -29,6 +29,7 @@ const RegisterTrainer = () => {
         axios.post(SERVER_URL + '/users/registerTrainer', registerDTO)
         .then(response => {
             console.log(response?.data)
+            navigate('users')
         })
         .catch(response => {
             console.log(response)
@@ -76,26 +77,7 @@ const RegisterTrainer = () => {
                         
                     </form>
                 </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
             <Footer />
         </div>
     )

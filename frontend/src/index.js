@@ -12,6 +12,7 @@ import axios from 'axios';
 import Memberships from './components/pages/memberships';
 import UserList from './components/pages/userListPage';
 import RegisterTrainer from './components/pages/registerTrainerPage';
+import AddMembershipPage from './components/pages/addMembershipPage';
 
 axios.interceptors.request.use(
   request => {
@@ -75,6 +76,7 @@ root.render(
       <Route path='memberships' element={<Memberships />} />
       <Route path='users' element={<UserList />} />
       <Route path='registerTrainer' element={<RegisterTrainer />} />
+      <Route path='addMembership' element={<AddMembershipPage />} />
     </Routes>
   </BrowserRouter>
 );
