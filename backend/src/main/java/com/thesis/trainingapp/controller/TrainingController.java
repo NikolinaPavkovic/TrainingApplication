@@ -1,6 +1,8 @@
 package com.thesis.trainingapp.controller;
 
+import com.thesis.trainingapp.dto.ReservationDTO;
 import com.thesis.trainingapp.dto.TrainingDTO;
+import com.thesis.trainingapp.dto.TrainingPeriodDTO;
 import com.thesis.trainingapp.model.Training;
 import com.thesis.trainingapp.service.TrainingService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,24 @@ public class TrainingController {
 
     @PostMapping
     public ResponseEntity<String> saveTraining(@RequestBody TrainingDTO dto) {
-        trainingService.save(dto);
+        if(trainingService.save(dto) == null) {
+            return ResponseEntity.ok().body("Appointment already booked.");
+        }
         return ResponseEntity.ok().body("Training saved.");
+    }
+
+    @GetMapping("/getPeriods")
+    public ResponseEntity<List<TrainingPeriodDTO>> getTrainingPeriods() {
+        return ResponseEntity.ok().body(trainingService.getCalendarPeriods());
+    }
+
+    @GetMapping("/getTrainingsForReservation")
+    public ResponseEntity<List<TrainingPeriodDTO>> getTrainingsForReservation() {
+        return ResponseEntity.ok().body(trainingService.getTrainingsForReservation());
+    }
+
+    @PostMapping("/makeReservation")
+    public ResponseEntity<String> makeReservation(@RequestBody ReservationDTO reservationDTO) {
+        return ResponseEntity.ok().body(trainingService.makeReservation(reservationDTO));
     }
 }

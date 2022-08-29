@@ -20,4 +20,5 @@ public interface UserService {
     UserDTO getUserDTO(String username);
     User getById(Long id);
     List<UserDTO> searchUsers(String[] searchParams);
+    List<UserDTO> getTrainers();
 }

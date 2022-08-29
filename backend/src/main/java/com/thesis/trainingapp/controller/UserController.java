@@ -92,6 +92,11 @@ public class UserController {
         return ResponseEntity.ok().body("Password changed.");
     }
 
+    @GetMapping("/getTrainers")
+    public ResponseEntity<List<UserDTO>> getTrainers(){
+        return ResponseEntity.ok().body(userService.getTrainers());
+    }
+
 
     @PostMapping("/saveRole")
     public ResponseEntity<String> saveRole(@RequestBody Role role){

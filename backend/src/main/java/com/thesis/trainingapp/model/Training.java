@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -24,7 +27,6 @@ public class Training {
 
     @Column(name = "start_date")
     private Date startDate;
-
     @Column(name = "duration")
     private Integer duration;
 
@@ -33,4 +35,10 @@ public class Training {
 
     @Column(name = "capacity")
     private Integer capacity;
+
+    @Column(name = "description")
+    private String description;
+
+    @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    private Collection<User> reservations = new ArrayList<>();
 }

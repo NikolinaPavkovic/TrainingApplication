@@ -5,3 +5,14 @@
 body{
 
 }
+
+.modeWrapper :first-child{
+    display: unset;
+}
+
+@media only screen and (max-width: 520px){
+    .modeWrapper :first-child{
+        display: none;
+    }
+
+}

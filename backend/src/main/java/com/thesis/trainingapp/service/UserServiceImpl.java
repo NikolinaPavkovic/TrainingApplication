@@ -168,5 +168,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return searchResult.stream().distinct().collect(Collectors.toList());
     }
 
+    @Override
+    public List<UserDTO> getTrainers() {
+        log.info("Fetching trainers");
+        List<User> allUsers = userRepository.findAll();
+        List<UserDTO> dtos = new ArrayList<>();
+        for (User u : allUsers) {
+            if(u.getRoles().stream().findFirst().get().getName().equals("ROLE_TRAINER")) {
+                dtos.add(getUserDTO(u.getUsername()));
+
+            }
+        }
+        return dtos;
+    }
+
 
 }
