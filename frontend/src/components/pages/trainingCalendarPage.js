@@ -107,7 +107,7 @@ const TrainingCalendar = () => {
                 />
                     {role == "ROLE_USER" && <div>
                         <p className='font-bold text-lg uppercase mt-8'>REZERVIŠI TRENING</p>
-                        <p className='text-orange-500'>{message}</p>
+                        <p className='text-orange-400'>{message}</p>
                         {trainings.map((training, index) => (
                             <div onClick={() => { reserve(training.id);}} className='w-[90%] shadow-xl md:col-span-3 p-4 my-4 mx-auto rounded-lg hover:scale-105 duration-300 border bg-gray-500 text-white cursor-pointer' key={index}>
                                 <div className='sm:grid sm:grid-cols-2 flex flex-col flex-wrap'>

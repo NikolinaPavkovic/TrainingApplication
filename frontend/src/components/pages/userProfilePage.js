@@ -123,8 +123,9 @@ const UserProfile = () => {
                     <div className='mt-10 text-center border-b pb-12'>
                         <h1 className='text-4xl font-medium text-gray-700'>{user?.firstname} {user?.lastname}</h1>
                         <p className='font-light text-gray-600 mt-3'>Novi Sad, Srbija</p>
-                        {!role=='ROLE_ADMIN' && <p className='mt-8 text-orange-500 font-bold uppercase'>{membership?.membership?.name || noMem}</p>}
-                        {role=='ROLE_ADMIN' && <p className='mt-8 text-orange-500 font-bold uppercase'>ADMIN</p>}
+                        {!role=='ROLE_ADMIN' && <p className='mt-8 text-orange-400 font-bold uppercase'>{membership?.membership?.name || noMem}</p>}
+                        {role=='ROLE_ADMIN' && <p className='mt-8 text-orange-400 font-bold uppercase'>ADMIN</p>}
+                        {role=='ROLE_TRAINER' && <p className='mt-8 text-orange-400 font-bold uppercase'>TRENER</p>}
                         <p className='mt-8 text-gray-500'>{user?.username}</p>
                         <p className='text-gray-500'>{user?.phone}</p>
                     </div>
@@ -139,17 +140,17 @@ const UserProfile = () => {
                         <img src={Logo} alt='Code gym' className='mx-auto'/>
                         <div className='mt-10 text-center border-b pb-12 grid grid-cols-3'>
                             <p className='text-left font-light text-gray-600 mt-3'>Ime</p>
-                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' type='text' value={firstname} onChange={(e) => setFirstname(e.target.value)}/>
+                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' type='text' value={firstname} onChange={(e) => setFirstname(e.target.value)}/>
                             <p className='text-left font-light text-gray-600 mt-3'>Prezime</p>
-                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' type='text' value={lastname} onChange={(e) => setLastname(e.target.value)}/>
+                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' type='text' value={lastname} onChange={(e) => setLastname(e.target.value)}/>
                             <p className='text-left font-light text-gray-600 mt-3'>Email</p>
-                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' type='text' value={username} onChange={(e) => setUsername(e.target.value)}/>
+                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' type='text' value={username} onChange={(e) => setUsername(e.target.value)}/>
                             <p className='text-left font-light text-gray-600 mt-3'>Telefon</p>
-                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' type='text' value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' type='text' value={phone} onChange={(e) => setPhone(e.target.value)}/>
                             <p className='mt-3 col-span-3 text-blue-800 underline text-left font-light cursor-pointer hover:scale-y-105' onClick={changePassword}>Promeni lozinku</p>
                         </div>
                         <div className='flex flex-col items-center justify-center mt-4'>
-                            <button onClick={handleEditProfile} className='bg-orange-500 w-[200px] rounded-md font-medium my-3 py-3 text-white'>
+                            <button onClick={handleEditProfile} className='bg-orange-400 w-[200px] rounded-md font-medium my-3 py-3 text-white'>
                                 OK
                             </button>
                             <button onClick={editProfile} className='w-[200px] rounded-md font-medium py-3 text-gray-500 border'>
@@ -166,11 +167,11 @@ const UserProfile = () => {
                     <img src={Logo} alt='Code gym' className='mx-auto'/>
                         <div className='mt-10 text-center border-b pb-12 grid grid-cols-3'>
                             <p className='text-left font-light text-gray-600 mt-3'>Trenutna lozinka</p>
-                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' type='password' required value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}/>
+                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' type='password' required value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}/>
                             <p className='text-left font-light text-gray-600 mt-3'>Nova lozinka</p>
-                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' type='password' required value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
+                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' type='password' required value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
                             <p className='text-left font-light text-gray-600 mt-3'>Ponovite novu lozinku</p>
-                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' type='password' required value={repeatedPassword} onChange={(e) => {
+                            <input className='col-span-2 w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' type='password' required value={repeatedPassword} onChange={(e) => {
                                 setRepeatedPassword(e.target.value);
                                 if(e.target.value !== newPassword) {
                                     setPassMatch(false);
@@ -184,7 +185,7 @@ const UserProfile = () => {
                             {!passMatch && <p className='text-left col-span-2 text-xs text-red-600'>Lozinke nisu jednake!</p>}
                         </div>
                         <div className='flex flex-col items-center justify-center mt-4'>
-                            <button onClick={(e) => handleEditPassword(e)} disabled={disabledBtn} className='bg-orange-500 w-[200px] rounded-md font-medium my-3 py-3 text-white'>
+                            <button onClick={(e) => handleEditPassword(e)} disabled={disabledBtn} className='bg-orange-400 w-[200px] rounded-md font-medium my-3 py-3 text-white'>
                                 OK
                             </button>
                             <button onClick={changePassword} className='w-[200px] rounded-md font-medium py-3 text-gray-500 border'>

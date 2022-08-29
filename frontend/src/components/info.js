@@ -24,7 +24,7 @@ const Info = () => {
                     Sigurni smo da će jedan dolazak u No Limit Gym ostaviti najbolji prvi utisak 
                     i podići vaša očekivanja na najviši nivo.
                     </p>
-                    <button className='bg-orange-500 w-[200px] rounded-md font-medium my-3 mx-auto md:mx-0 py-3 text-white' onClick={() => {navigate('/register')}}>Postani član</button>
+                    <button className='bg-orange-400 w-[200px] rounded-md font-medium my-3 mx-auto md:mx-0 py-3 text-white' onClick={() => {navigate('/register')}}>Postani član</button>
                 </div>
             </div>
         </div>

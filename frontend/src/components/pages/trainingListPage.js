@@ -6,6 +6,7 @@ import AccessDenied from './accessDeniedPage';
 import DeleteTraining from './deleteTrainingModal';
 import DeleteReservation from './deleteReservationModal';
 import { useNavigate } from 'react-router';
+import TrainingInfo from './trainingInfoModal';
 
 const TrainingList = () => {
     const SERVER_URL = process.env.REACT_APP_API;
@@ -17,6 +18,8 @@ const TrainingList = () => {
     const [trainingId, setTrainingId] = useState('');
     const [modalIsOpenReservation, setmodalIsOpenReservation] = useState(false);
     const [modalIsOpenTraining, setmodalIsOpenTraining] = useState(false);
+    const [modalIsOpenInfo, setModalIsOpenInfo] = useState(false);
+    const [trainingReservations, setTrainingReservations] = useState([]);
 
     useEffect(() => {
         axios.get(SERVER_URL + '/users/getLoggedUser')
@@ -45,6 +48,7 @@ const TrainingList = () => {
                             trainingsPom.push(element);
                         });
                         setTrainings(trainingsPom);
+                        console.log(trainingsPom);
                     })
                 } else if(response?.data.roles[0] == 'ROLE_ADMIN') {
                     axios.get(SERVER_URL + '/trainings/getTrainingsForAdmin')
@@ -77,31 +81,35 @@ const TrainingList = () => {
         navigate('/addTraining')
     }
 
+    const openInfoDialog = (reservations) => {
+        setTrainingReservations(reservations);
+        setModalIsOpenInfo(true);
+    }
+
     return(
         <div>
             <Navbar />
-            {(role == "ROLE_USER" || role=="ROLE_TRAINER") && 
+            {role == "ROLE_USER"  && 
                 <div>
                     <p className='w-[90%] mx-auto font-bold text-xl uppercase mt-8 text-orange-400'>REZERVISANI TRENINZI</p>
                     {trainings.map((training, index) => (
-                        <div onClick={() => { cancel(training.id);}} className='w-[90%] shadow-xl md:col-span-3 p-4 my-4 mx-auto rounded-lg hover:scale-105 duration-300 border bg-gray-500 text-white cursor-pointer' key={index}>
+                        <div className='w-[90%] shadow-xl md:col-span-3 p-4 my-4 mx-auto rounded-lg hover:scale-105 duration-300 border bg-gray-500 text-white cursor-pointer' key={index} onClick={() => { cancel(training.id);}}>
                             <div className='sm:grid sm:grid-cols-2 flex flex-col flex-wrap'>
                                 <div className='md:border-r-2 border-b-2 sm:border-b-0'>
-                                <h1 className='text-4xl font-medium text-white mr-3 uppercase'>{training.name}</h1>
-                                <p className='font-light text-white mt-3'>{training.startDate}</p>
-                                <p>{training.duration} min</p>
+                                    <h1 className='text-4xl font-medium text-white mr-3 uppercase'>{training.name}</h1>
+                                    <p className='font-light text-white mt-3'>{training.startDate}</p>
+                                    <p>{training.duration} min</p>
                                 </div>
-                                <div className='ml-2'>
-                                    <br />
-                                    <p className='mt-2 text-w
-                                    font-bold text-lg uppercase'>{training.trainer.firstname} {training.trainer.lastname}</p>
+                                <div className='md:ml-2 relative'>
+                                    <p className='mt-2 text-w font-bold text-lg uppercase'>{training.trainer.firstname} {training.trainer.lastname}</p>
+                                    <p>{training.description}</p>
                                 </div>
                             </div>
                         </div>
                     )) }
                 </div>}
 
-                {(role == "ROLE_ADMIN") && <div>
+                {(role == "ROLE_ADMIN"|| role=="ROLE_TRAINER") && <div>
                         <div className='flex flex-row w-[90%] mx-auto py-3'>
                             <p className='w-[50%] font-bold text-xl uppercase mt-8 py-3 text-orange-400'>TRENINZI</p>
                             <div className='w-[50%] mr-0 mt-8 relative '>
@@ -109,17 +117,17 @@ const TrainingList = () => {
                             </div>
                         </div>
                         {trainings.map((training, index) => (
-                            <div onClick={() => { cancel(training.id);}} className='w-[90%] shadow-xl md:col-span-3 p-4 my-4 mx-auto rounded-lg hover:scale-105 duration-300 border bg-gray-500 text-white cursor-pointer' key={index}>
+                            <div className='w-[90%] shadow-xl md:col-span-3 p-4 my-4 mx-auto rounded-lg hover:scale-105 duration-300 border bg-gray-500 text-white cursor-pointer' key={index}>
                                 <div className='sm:grid sm:grid-cols-2 flex flex-col flex-wrap'>
-                                    <div className='md:border-r-2 border-b-2 sm:border-b-0'>
-                                    <h1 className='text-4xl font-medium text-white mr-3 uppercase'>{training.name}</h1>
-                                    <p className='font-light text-white mt-3'>{training.startDate}</p>
-                                    <p>{training.duration} min</p>
+                                    <div onClick={() => { cancel(training.id);}} className='md:border-r-2 border-b-2 sm:border-b-0'>
+                                        <h1 className='text-4xl font-medium text-white mr-3 uppercase'>{training.name}</h1>
+                                        <p className='font-light text-white mt-3'>{training.startDate}</p>
+                                        <p>{training.duration} min</p>
                                     </div>
-                                    <div className='ml-2'>
-                                        <br />
-                                        <p className='mt-2 text-w
-                                        font-bold text-lg uppercase'>{training.trainer.firstname} {training.trainer.lastname}</p>
+                                    <div className='md:ml-2 relative'>
+                                        <p onClick={() => { openInfoDialog(training.reservations);}} className='absolute right-0 cursor-pointe w-[30px] underline'>info</p>
+                                        {role!='ROLE_TRAINER' && <p className='text-white font-bold text-lg uppercase'>{training.trainer.firstname} {training.trainer.lastname}</p>}
+                                        <p className='w-[90%]'>{training.description}</p>
                                     </div>
                                 </div>
                             </div>
@@ -127,8 +135,9 @@ const TrainingList = () => {
                     </div>}
 
                 {role == '' && <AccessDenied />}
-                <DeleteTraining modalIsOpen={modalIsOpenTraining} setModalIsOpen={setmodalIsOpenTraining} trainingId={trainingId}/>
+                <DeleteTraining modalIsOpen={modalIsOpenTraining} setModalIsOpen={setmodalIsOpenTraining} trainingId={trainingId} />
                 <DeleteReservation modalIsOpen={modalIsOpenReservation} setModalIsOpen={setmodalIsOpenReservation} trainingId={trainingId} />
+                <TrainingInfo modalIsOpen={modalIsOpenInfo} setModalIsOpen={setModalIsOpenInfo} reservations={trainingReservations} />
         </div>
     )
 

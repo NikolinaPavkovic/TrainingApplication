@@ -18,3 +18,21 @@
 	gap: 2rem;
 	margin: auto;
 }
+
+.infoModal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	border: 1px solid #ccc;
+	background: #fff;
+	overflow: auto;
+	border-radius: 0.5rem;
+	outline: none;
+	padding: 4rem;
+	width: 500px;
+	display: grid;
+	gap: 0.5rem;
+	margin: auto;
+}

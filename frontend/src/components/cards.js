@@ -81,7 +81,7 @@ const Cards = () => {
                                 {index == 0 && <p className='py-2 border-b border-t mx-8 mt-8'>{benefit.name}</p>}
                                 {index != 0 && <p className='py-2 border-b mx-8'>{benefit.name}</p>}
                             </div>))}
-                            {role!='ROLE_ADMIN' && <button className='bg-orange-500 text-white rounded-md font-medium w-[200px] mx-auto my-6 px-6 py-3' onClick={()=>{reserveMembership(membership.id)}} >Rezerviši paket</button>}
+                            {role!='ROLE_ADMIN' && <button className='bg-orange-400 text-white rounded-md font-medium w-[200px] mx-auto my-6 px-6 py-3' onClick={()=>{reserveMembership(membership.id)}} >Rezerviši paket</button>}
                         </div>
                     ))) : (
                         <div className='col-span-3 max-w-[800px] mt-[-96px] w-full h-screen text-center mx-auto flex flex-col justify-center'>

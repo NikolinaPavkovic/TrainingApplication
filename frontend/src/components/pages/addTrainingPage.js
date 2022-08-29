@@ -4,6 +4,8 @@ import Navbar from '../navbar';
 import Logo from '../../assets/logo.jpg'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddTrainingPage = () => {
     const SERVER_URL = process.env.REACT_APP_API;
@@ -65,6 +67,7 @@ const AddTrainingPage = () => {
         axios.post(SERVER_URL + '/trainings', addTrainingDTO)
         .then(response => {
             console.log(response?.data);
+            toast.success('Uspešno ste dodali trening.')
         }).catch(reason => {
             console.log(reason)
         })
@@ -101,6 +104,7 @@ const AddTrainingPage = () => {
     return (
         <div>
             <Navbar />
+            <ToastContainer />
             <div className='max-w-[1240] min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-5 border-t-2'>
                 <div className='max-w-[600px] w-full p-10 bg-white rounded-xl z-10 shadow-xl border'>
                     <div className='text-center'>
@@ -109,19 +113,19 @@ const AddTrainingPage = () => {
                     <form className='mt-8' onSubmit={(e) => addTraining(e)}>
                         <div>
                             <label className='text-sm font-bold text-gray-700'>Naziv</label>
-                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={name} onChange={(e) => setName(e.target.value)} type='text' placeholder='Unesite naziv'/>
+                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={name} onChange={(e) => setName(e.target.value)} type='text' placeholder='Unesite naziv'/>
                         </div>
                         <div className='mt-8'>
                             <label className='text-sm font-bold text-gray-700'>Trajanje(u minutima) </label>
-                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={duration} onChange={(e) => setDuration(e.target.value)} type='number' min='0' max='120' placeholder='Unesite trajanje'/>
+                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={duration} onChange={(e) => setDuration(e.target.value)} type='number' min='0' max='120' placeholder='Unesite trajanje'/>
                         </div>
                         <div className='mt-8'>
                             <label className='text-sm font-bold text-gray-700'>Kapacitet(max osoba) </label>
-                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={capacity} onChange={(e) => setCapacity(e.target.value)} type='number' min='1' max='35' placeholder='Unesite kapacitet'/>
+                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={capacity} onChange={(e) => setCapacity(e.target.value)} type='number' min='1' max='35' placeholder='Unesite kapacitet'/>
                         </div>
                         <div className='mt-8'>
                             <label className='text-sm font-bold text-gray-700'>Odaberite datum i vreme početka</label>
-                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={startDate} onChange={(e) => setStartDate(e.target.value)} type='datetime-local' min={sDate}/>
+                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={startDate} onChange={(e) => setStartDate(e.target.value)} type='datetime-local' min={sDate}/>
                         </div>
                         <div className='mt-8'>
                             <label className='text-sm font-bold text-gray-700'>Trener</label>
@@ -136,11 +140,11 @@ const AddTrainingPage = () => {
 
                         <div className='mt-8'>
                             <label className='text-sm font-bold text-gray-700'>Opis</label>
-                            <textarea className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' value={description} onChange={(e) => setDescription(e.target.value)} type='text' placeholder='Unesite opis'/>
+                            <textarea className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' value={description} onChange={(e) => setDescription(e.target.value)} type='text' placeholder='Unesite opis'/>
                         </div>
 
                         <div className='flex flex-col items-center justify-center mt-4'>
-                            <button type='submit' className='bg-orange-500 w-[200px] rounded-md font-medium my-3 py-3 text-white'>
+                            <button type='submit' className='bg-orange-400 w-[200px] rounded-md font-medium my-3 py-3 text-white'>
                                 Dodaj trening
                             </button>
                         </div>

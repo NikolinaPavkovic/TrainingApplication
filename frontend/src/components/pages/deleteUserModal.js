@@ -20,8 +20,8 @@ const DeleteUser = ({modalIsOpen, setModalIsOpen, userId}) => {
             onRequestClose={() => setModalIsOpen(false)}
             ariaHideApp={false} className='deleteModal'>
                 <div className='text-center text-xl col-span-2'>Da li ste sigurni da želite da obrišete korisnika?</div>
-                <button className='bg-orange-500 text-white rounded-xl font-medium w-[100px] mx-auto my-1 px-6 py-3' onClick={deleteUser}>DA</button>
-                <button className='bg-orange-500 text-white rounded-xl font-medium w-[100px] mx-auto my-1 px-6 py-3' onClick={() => {setModalIsOpen(false)}}>NE</button>
+                <button className='bg-orange-400 text-white rounded-xl font-medium w-[100px] mx-auto my-1 px-6 py-3' onClick={deleteUser}>DA</button>
+                <button className='bg-orange-400 text-white rounded-xl font-medium w-[100px] mx-auto my-1 px-6 py-3' onClick={() => {setModalIsOpen(false)}}>NE</button>
             </Modal>
         </div>
     )

@@ -18,7 +18,7 @@ const Footer = () =>{
                 {/*<h1 className='font-bold text-sm'>ŽELIM DA SE PRIJAVIM NA VAŠA EMAIL OBAVEŠTENJA</h1>
                 <div className='flex flex-col sm:flex-row items-center justify-between w-full'>
                     <input type='email' placeholder='Enter email' className='flex p-3 w-full rounded-md text-black' />
-                    <button className='bg-orange-500 rounded-md font-medium w-[200px] ml-3 my-6 px-6 py-3'>Obavesti me</button>
+                    <button className='bg-orange-400 rounded-md font-medium w-[200px] ml-3 my-6 px-6 py-3'>Obavesti me</button>
                 </div>*/}
                 <div className='flex justify-end items-center'>
                     <div>

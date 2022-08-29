@@ -63,7 +63,7 @@ const UserProfileForAdmin = () => {
                         <div className='mt-10 text-center border-b pb-12'>
                             <h1 className='text-4xl font-medium text-gray-700'>{profileUser?.user?.firstname} {profileUser?.user?.lastname}</h1>
                             <p className='font-light text-gray-600 mt-3'>Novi Sad, Srbija</p>
-                            <p className='mt-8 text-orange-500 font-bold uppercase'>{profileUser?.membership?.name || noMem}</p>
+                            <p className='mt-8 text-orange-400 font-bold uppercase'>{profileUser?.membership?.name || noMem}</p>
                             <p className='mt-8 text-gray-500'>{profileUser?.user?.username}</p>
                             <p className='text-gray-500'>{profileUser?.user?.phone}</p>
                         </div>
@@ -79,7 +79,7 @@ const UserProfileForAdmin = () => {
                         <div className='mt-10 text-center border-b pb-12'>
                             <h1 className='text-4xl font-medium text-gray-700'>{profileUser?.firstname} {profileUser?.lastname}</h1>
                             <p className='font-light text-gray-600 mt-3'>Novi Sad, Srbija</p>
-                            <p className='mt-8 text-orange-500 font-bold uppercase'>TRENER</p>
+                            <p className='mt-8 text-orange-400 font-bold uppercase'>TRENER</p>
                             <p className='mt-8 text-gray-500'>{profileUser?.username}</p>
                             <p className='text-gray-500'>{profileUser?.phone}</p>
                         </div>

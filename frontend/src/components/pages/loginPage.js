@@ -45,16 +45,16 @@ const Login = () => {
                 <form className='mt-8' onSubmit={login}>
                     <div>
                         <label className='text-sm font-bold text-gray-700'>Email</label>
-                        <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={username} onChange={(e) => setUsername(e.target.value)} type='email' placeholder='Unesite email'/>
+                        <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={username} onChange={(e) => setUsername(e.target.value)} type='email' placeholder='Unesite email'/>
                     </div>
                     <div className='mt-8'>
                         <label className='text-sm font-bold text-gray-700'>
                             Lozinka
                         </label>
-                        <input className='w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={password} onChange={(e) => setPassword(e.target.value)} type='password' placeholder='Unesite lozinku'/>
+                        <input className='w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={password} onChange={(e) => setPassword(e.target.value)} type='password' placeholder='Unesite lozinku'/>
                     </div>
                     <div className='flex flex-col items-center justify-center mt-4'>
-                        <button type='submit' className='bg-orange-500 w-[200px] rounded-md font-medium my-3 py-3 text-white'>
+                        <button type='submit' className='bg-orange-400 w-[200px] rounded-md font-medium my-3 py-3 text-white'>
                             Prijavi se
                         </button>
                     </div>

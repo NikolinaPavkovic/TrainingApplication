@@ -56,31 +56,31 @@ const Register = () => {
                 <form className='mt-8' onSubmit={e => register(e)}>
                     <div>
                         <label className='text-sm font-bold text-gray-700'>Ime</label>
-                        <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={firstname} onChange={(e) => setFirstName(e.target.value)} type='text' placeholder='Unesite ime'/>
+                        <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={firstname} onChange={(e) => setFirstName(e.target.value)} type='text' placeholder='Unesite ime'/>
                     </div>
                     <div className='mt-8'>
                         <label className='text-sm font-bold text-gray-700'>Prezime</label>
-                        <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={lastname} onChange={(e) => setLastname(e.target.value)} type='text' placeholder='Unesite prezime'/>
+                        <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={lastname} onChange={(e) => setLastname(e.target.value)} type='text' placeholder='Unesite prezime'/>
                     </div>
                     <div className='mt-8'>
                         <label className='text-sm font-bold text-gray-700'>Telefon</label>
-                        <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={phone} onChange={(e) => setPhone(e.target.value)} type='text' placeholder='Unesite telefon'/>
+                        <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={phone} onChange={(e) => setPhone(e.target.value)} type='text' placeholder='Unesite telefon'/>
                     </div>
                     <div className='mt-8'>
                         <label className='text-sm font-bold text-gray-700'>Email</label>
-                        <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={username} onChange={(e) => setUsername(e.target.value)} type='email' placeholder='Unesite email'/>
+                        <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={username} onChange={(e) => setUsername(e.target.value)} type='email' placeholder='Unesite email'/>
                     </div>
                     <div className='mt-8'>
                         <label className='text-sm font-bold text-gray-700'>
                             Lozinka
                         </label>
-                        <input className='w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={password} onChange={(e) => setPassword(e.target.value)} type='password' placeholder='Unesite lozinku'/>
+                        <input className='w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={password} onChange={(e) => setPassword(e.target.value)} type='password' placeholder='Unesite lozinku'/>
                     </div>
                     <div className='mt-8'>
                         <label className='text-sm font-bold text-gray-700'>
                             Ponovite lozinku
                         </label>
-                        <input className='w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={repeatedPassword} onChange={(e) => {
+                        <input className='w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={repeatedPassword} onChange={(e) => {
                             setRepeatedPassword(e.target.value);
                             if(e.target.value !== password) {
                                 setPassMatch(false);
@@ -93,7 +93,7 @@ const Register = () => {
                         {!passMatch && <p className='text-xs text-red-600'>Lozinke nisu jednake!</p>}
                     </div>
                     <div className='flex flex-col items-center justify-center mt-4'>
-                        <button type='submit' className='bg-orange-500 w-[200px] rounded-md font-medium my-3 py-3 text-white' disabled={diabledBtn}>
+                        <button type='submit' className='bg-orange-400 w-[200px] rounded-md font-medium my-3 py-3 text-white' disabled={diabledBtn}>
                             Registruj se
                         </button>
                     </div>

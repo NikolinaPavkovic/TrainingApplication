@@ -51,20 +51,20 @@ const AddMembershipPage = () => {
                     <form className='mt-8' onSubmit={(e) => addMembership(e)}>
                         <div>
                             <label className='text-sm font-bold text-gray-700'>Naziv</label>
-                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={name} onChange={(e) => setName(e.target.value)} type='text' placeholder='Unesite naziv'/>
+                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={name} onChange={(e) => setName(e.target.value)} type='text' placeholder='Unesite naziv'/>
                         </div>
                         <div className='mt-8'>
                             <label className='text-sm font-bold text-gray-700'>Cena</label>
-                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={price} onChange={(e) => setPrice(e.target.value)} type='number' placeholder='Unesite cenu'/>
+                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={price} onChange={(e) => setPrice(e.target.value)} type='number' placeholder='Unesite cenu'/>
                         </div>
                         <div className='mt-8'>
                             <label className='text-sm font-bold text-gray-700'>Trajanje(u danima) </label>
-                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-500' required value={durationInDays} onChange={(e) => setDurationInDays(e.target.value)} type='number' placeholder='Unesite trajanje'/>
+                            <input className=' w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-orange-400' required value={durationInDays} onChange={(e) => setDurationInDays(e.target.value)} type='number' placeholder='Unesite trajanje'/>
                         </div>
                         <div className='mt-8 flex justify-center items-center'>
                             <label className='text-sm font-bold text-gray-700'>Pogodnosti</label>
-                            <input className=' w-full text-base border-b mx-4 border-gray-300 focus:outline-none focus:border-orange-500' value={benefit} onChange={(e) => setBenefit(e.target.value)} type='text' placeholder='Unesite pogodnost'/>
-                            <button onClick={addBenefit} type='button' className='bg-orange-500 w-[100px] rounded-md font-medium my-3 py-3 text-white'>
+                            <input className=' w-full text-base border-b mx-4 border-gray-300 focus:outline-none focus:border-orange-400' value={benefit} onChange={(e) => setBenefit(e.target.value)} type='text' placeholder='Unesite pogodnost'/>
+                            <button onClick={addBenefit} type='button' className='bg-orange-400 w-[100px] rounded-md font-medium my-3 py-3 text-white'>
                                 Dodaj
                             </button>
                         </div>
@@ -79,7 +79,7 @@ const AddMembershipPage = () => {
                         )}
                         
                         <div className='flex flex-col items-center justify-center mt-4'>
-                            <button type='submit' className='bg-orange-500 w-[200px] rounded-md font-medium my-3 py-3 text-white'>
+                            <button type='submit' className='bg-orange-400 w-[200px] rounded-md font-medium my-3 py-3 text-white'>
                                 Dodaj članarinu
                             </button>
                         </div>

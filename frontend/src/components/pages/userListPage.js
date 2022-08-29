@@ -91,7 +91,7 @@ const UserList = () => {
                             </div>
                             <div className='ml-2 relative'>
                                 <AiOutlineDelete size={25} className='absolute right-0 top-2 cursor-pointer' onClick={() => deleteUser(user.id)}/>
-                                <p className='mt-2 text-orange-500 font-bold uppercase'>{role(user.roles[0])}</p>
+                                <p className='mt-2 text-orange-400 font-bold uppercase'>{role(user.roles[0])}</p>
                             </div>
                         </div>
                     </div>
