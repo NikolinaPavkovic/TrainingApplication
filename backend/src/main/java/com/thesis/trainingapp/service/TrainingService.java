@@ -3,6 +3,7 @@ package com.thesis.trainingapp.service;
 import com.thesis.trainingapp.dto.ReservationDTO;
 import com.thesis.trainingapp.dto.TrainingDTO;
 import com.thesis.trainingapp.dto.TrainingPeriodDTO;
+import com.thesis.trainingapp.dto.UserDTO;
 import com.thesis.trainingapp.model.Training;
 
 import java.util.List;
@@ -14,4 +15,8 @@ public interface TrainingService {
     List<TrainingPeriodDTO> getCalendarPeriods();
     List<TrainingPeriodDTO> getTrainingsForReservation();
     String makeReservation(ReservationDTO dto);
+    List<TrainingPeriodDTO> getUserTrainings(String username);
+    List<TrainingPeriodDTO> getTrainerTrainings(String username);
+    void deleteReservation(Long trainingId, String username);
+    void deleteTraining(Long trainingId);
 }

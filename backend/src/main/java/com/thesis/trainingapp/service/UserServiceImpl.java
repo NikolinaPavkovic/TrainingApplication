@@ -1,9 +1,6 @@
 package com.thesis.trainingapp.service;
 
-import com.thesis.trainingapp.dto.NewPasswordDTO;
-import com.thesis.trainingapp.dto.RegisterDTO;
-import com.thesis.trainingapp.dto.UserDTO;
-import com.thesis.trainingapp.dto.UsersWithMembershipDTO;
+import com.thesis.trainingapp.dto.*;
 import com.thesis.trainingapp.exception.UserNotFoundException;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
@@ -117,7 +114,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User editUser(UserDTO dto, String currentUsername) {
+    public User editUser(EditProfileDTO dto, String currentUsername) {
         User user = userRepository.findByUsername(currentUsername);
         user.setFirstname(dto.getFirstname());
         user.setLastname(dto.getLastname());
@@ -180,6 +177,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             }
         }
         return dtos;
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
     }
 
 

@@ -1,9 +1,6 @@
 package com.thesis.trainingapp.service;
 
-import com.thesis.trainingapp.dto.NewPasswordDTO;
-import com.thesis.trainingapp.dto.RegisterDTO;
-import com.thesis.trainingapp.dto.UserDTO;
-import com.thesis.trainingapp.dto.UsersWithMembershipDTO;
+import com.thesis.trainingapp.dto.*;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
 
@@ -15,10 +12,11 @@ public interface UserService {
     void addRoleToUser(String username, String roleName);
     User getUser(String username);
     List<UserDTO> getUsers();
-    User editUser(UserDTO dto, String currentUsername);
+    User editUser(EditProfileDTO dto, String currentUsername);
     User changePassword(NewPasswordDTO dto, String username);
     UserDTO getUserDTO(String username);
     User getById(Long id);
     List<UserDTO> searchUsers(String[] searchParams);
     List<UserDTO> getTrainers();
+    void deleteUser(Long userId);
 }

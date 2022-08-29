@@ -65,4 +65,9 @@ public class MembershipServiceImpl implements MembershipService{
         }
         return null;
     }
+
+    @Override
+    public void delete(Long id) {
+        membershipRepository.deleteById(id);
+    }
 }

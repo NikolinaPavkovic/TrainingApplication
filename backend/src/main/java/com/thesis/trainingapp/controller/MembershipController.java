@@ -25,4 +25,10 @@ public class MembershipController {
         membershipService.saveMembreship(dto);
         return ResponseEntity.ok().body("Membership saved");
     }
+
+    @DeleteMapping("/{memId}")
+    public ResponseEntity<String> deleteMembership(@PathVariable Long memId) {
+        membershipService.delete(memId);
+        return ResponseEntity.ok().body("Membership deleted.");
+    }
 }

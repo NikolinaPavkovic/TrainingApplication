@@ -9,4 +9,5 @@ public interface MembershipService {
     Membership saveMembreship(MembershipDTO membership);
     List<Membership> getMemberships();
     Membership getById(Long id);
+    void delete(Long id);
 }

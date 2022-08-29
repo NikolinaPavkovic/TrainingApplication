@@ -1,6 +1,7 @@
 package com.thesis.trainingapp.controller;
 
 import com.thesis.trainingapp.dto.UserMembershipDTO;
+import com.thesis.trainingapp.model.User;
 import com.thesis.trainingapp.model.UserMembership;
 import com.thesis.trainingapp.service.UserMembershipService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,9 @@ public class UserMembershipController {
     }
 
     @GetMapping("/get/{username}")
-    public ResponseEntity<UserMembership> getUserMembership(@PathVariable String username){
+    public ResponseEntity<?> getUserMembership(@PathVariable String username){
+        UserMembership userMembership = userMembershipService.get(username);
+        if (userMembership == null) return ResponseEntity.ok().body("No membership.");
         return ResponseEntity.ok().body(userMembershipService.get(username));
     }
 

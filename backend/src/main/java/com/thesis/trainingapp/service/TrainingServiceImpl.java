@@ -134,6 +134,47 @@ public class TrainingServiceImpl implements TrainingService{
         }
     }
 
+    @Override
+    public List<TrainingPeriodDTO> getUserTrainings(String username) {
+        List<TrainingPeriodDTO> allTrainings = getCalendarPeriods();
+        List<TrainingPeriodDTO> possibleTrainings = new ArrayList<>();
+        for (TrainingPeriodDTO dto : allTrainings) {
+            for (User user : dto.getReservations()) {
+                if(user.getUsername().equals(username)) possibleTrainings.add(dto);
+            }
+        }
+        return possibleTrainings;
+    }
+
+    @Override
+    public List<TrainingPeriodDTO> getTrainerTrainings(String username) {
+        List<TrainingPeriodDTO> allTrainings = getCalendarPeriods();
+        List<TrainingPeriodDTO> trainerTrainings = new ArrayList<>();
+        for (TrainingPeriodDTO dto : allTrainings) {
+            if(dto.getTrainer().getUsername().equals(username)) trainerTrainings.add(dto);
+        }
+        return trainerTrainings;
+    }
+
+    @Override
+    public void deleteReservation(Long trainingId, String username) {
+        Training training = getById(trainingId);
+        List<User> reservations = new ArrayList<>();
+        for (User u : training.getReservations()) {
+            if(u.getUsername().equals(username)) {
+                reservations.remove(u);
+                break;
+            }
+        }
+        training.setReservations(reservations);
+        trainingRepository.save(training);
+    }
+
+    @Override
+    public void deleteTraining(Long trainingId) {
+        trainingRepository.deleteById(trainingId);
+    }
+
     private boolean userAlreadyBooked(Long userId, Training training) {
          for (var reservation: training.getReservations())
              if(reservation.getId() == userId) return true;

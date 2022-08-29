@@ -5,10 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thesis.trainingapp.dto.NewPasswordDTO;
-import com.thesis.trainingapp.dto.RegisterDTO;
-import com.thesis.trainingapp.dto.UserDTO;
-import com.thesis.trainingapp.dto.UsersWithMembershipDTO;
+import com.thesis.trainingapp.dto.*;
 import com.thesis.trainingapp.filter.CustomAuthorizationFilter;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
@@ -78,7 +75,7 @@ public class UserController {
 
     @PutMapping("/edit")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<String> editUser(@RequestBody UserDTO dto, Principal user){
+    public ResponseEntity<String> editUser(@RequestBody EditProfileDTO dto, Principal user){
         User u = this.userService.editUser(dto, user.getName());
         if(u == null) return ResponseEntity.status(409).body("Username already exists!");
         return ResponseEntity.ok().body("User edited.");
@@ -88,7 +85,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> changePassword(@RequestBody NewPasswordDTO passwordDTO, Principal user){
         User u = userService.changePassword(passwordDTO, user.getName());
-        if(u == null) return ResponseEntity.status(409).body("Wrong current password");
+        if(u == null) return ResponseEntity.ok().body("Wrong current password");
         return ResponseEntity.ok().body("Password changed.");
     }
 
@@ -97,6 +94,11 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getTrainers());
     }
 
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId){
+        userService.deleteUser(userId);
+        return ResponseEntity.ok().body("User deleted.");
+    }
 
     @PostMapping("/saveRole")
     public ResponseEntity<String> saveRole(@RequestBody Role role){

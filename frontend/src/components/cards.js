@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Sign from '../assets/teg.png'
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Cards = () => {
     const navigate = useNavigate();
@@ -25,6 +27,11 @@ const Cards = () => {
                 navigate('/login');
             } else { //ako jeste
                 axios.post(SERVER_URL + '/userMemberships', {userId: response?.data?.id, membershipId: id})
+                .then(response => {
+                    if(response?.data == 'User membership already exists.') {
+                        toast.warn('Već imate važeću članarinu.')
+                    }
+                })
             }
         }).catch(response => {
             console.log(response);
@@ -33,10 +40,11 @@ const Cards = () => {
 
     return (
         <div>
+            <ToastContainer />
             <div className='w-full py-[10rem] px-4 bg-white'>
                 <div className='max-w-[1240px] mx-auto grid md:grid-cols-3 md:grid-rows-2 gap-8'>
                     {memberships.length ? (memberships.map((membership) => (
-                        <div className='w-full shadow-xl flex flex-col p-4 my-4 rounded-lg hover:scale-105 duration-300' key={membership.id}>
+                        <div className='w-full shadow-xl flex flex-col p-4 my-4 rounded-lg hover:scale-105 duration-300 border' key={membership.id}>
                             <img className='w-20 mx-auto mt-[-3rem]' src={Sign} alt='/'/>
                             <h2 className='text-3xl font-bold text-center py-8 uppercase'>{membership.name}</h2>
                             <p className='text-center text-5xl font-bold'>{membership.price} rsd</p>

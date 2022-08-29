@@ -5,6 +5,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from '../footer';
 
 const TrainingCalendar = () => {
     const SERVER_URL = process.env.REACT_APP_API;
@@ -13,6 +14,7 @@ const TrainingCalendar = () => {
     const [periods, setPeriods] = useState([]);
     const [trainings, setTrainings] = useState([]);
     const [trainingId, setTrainingId] = useState('');
+    const [message, setMessage] = useState('');
 
     const reserveDTO = {
         userId: loggedUser.id,
@@ -43,16 +45,28 @@ const TrainingCalendar = () => {
                     setPeriods(periodsPom);
                 })
                 if(response?.data.roles[0]=="ROLE_USER") {
-                    axios.get(SERVER_URL + '/trainings/getTrainingsForReservation')
+                    axios.get(SERVER_URL + '/userMemberships/get/' + response?.data?.username)
                     .then(resp => {
-                        var trainingsPom = []
-                        resp?.data.forEach(element => {
-                            element.startDate = format(new Date(element.startDate), 'dd.MM.yyyy. kk:mm');
-                            element.endDate = format(new Date(element.endDate), 'dd.MM.yyyy. kk:mm');
-                            trainingsPom.push(element);
-                        });
-                        setTrainings(trainingsPom);
-                        console.log(trainingsPom);
+                        
+                        if(resp?.data != 'No membership.') {
+                            axios.get(SERVER_URL + '/trainings/getTrainingsForReservation')
+                            .then(r => {
+                                var trainingsPom = []
+                                r?.data.forEach(element => {
+                                    element.startDate = format(new Date(element.startDate), 'dd.MM.yyyy. kk:mm');
+                                    element.endDate = format(new Date(element.endDate), 'dd.MM.yyyy. kk:mm');
+                                    trainingsPom.push(element);
+                                });
+                                setTrainings(trainingsPom);
+                                console.log(trainingsPom);
+                            }).catch(reason => {
+                                console.log(reason);
+                            });
+                        } else {
+                            setMessage('Da biste rezervisali trening morate da imate validnu članarinu.');
+                        }
+                    }).catch(reason => {
+                        console.log(reason);
                     })
                 }
                 
@@ -93,6 +107,7 @@ const TrainingCalendar = () => {
                 />
                     {role == "ROLE_USER" && <div>
                         <p className='font-bold text-lg uppercase mt-8'>REZERVIŠI TRENING</p>
+                        <p className='text-orange-500'>{message}</p>
                         {trainings.map((training, index) => (
                             <div onClick={() => { reserve(training.id);}} className='w-[90%] shadow-xl md:col-span-3 p-4 my-4 mx-auto rounded-lg hover:scale-105 duration-300 border bg-gray-500 text-white cursor-pointer' key={index}>
                                 <div className='sm:grid sm:grid-cols-2 flex flex-col flex-wrap'>
@@ -112,6 +127,7 @@ const TrainingCalendar = () => {
                     </div>}
                 </div>
             </div>
+            <Footer />
             
         </div>
     )
