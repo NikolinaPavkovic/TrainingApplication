@@ -5,6 +5,11 @@ import Navbar from '../navbar';
 
 
 const Memberships = () => {
+
+    const addMembership = () => {
+
+    }
+
     return(
         <div>
             <Navbar />

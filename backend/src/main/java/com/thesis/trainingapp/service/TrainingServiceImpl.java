@@ -157,6 +157,16 @@ public class TrainingServiceImpl implements TrainingService{
     }
 
     @Override
+    public List<TrainingPeriodDTO> getTrainingsForAdmin() {
+        List<TrainingPeriodDTO> allTrainings = getCalendarPeriods();
+        List<TrainingPeriodDTO> trainingsForAdmin = new ArrayList<>();
+        for (TrainingPeriodDTO dto : allTrainings) {
+            if(dto.getStartDate().after(new Date())) trainingsForAdmin.add(dto);
+        }
+        return trainingsForAdmin;
+    }
+
+    @Override
     public void deleteReservation(Long trainingId, String username) {
         Training training = getById(trainingId);
         List<User> reservations = new ArrayList<>();

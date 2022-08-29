@@ -17,6 +17,7 @@ public interface TrainingService {
     String makeReservation(ReservationDTO dto);
     List<TrainingPeriodDTO> getUserTrainings(String username);
     List<TrainingPeriodDTO> getTrainerTrainings(String username);
+    List<TrainingPeriodDTO> getTrainingsForAdmin();
     void deleteReservation(Long trainingId, String username);
     void deleteTraining(Long trainingId);
 }

@@ -3,6 +3,7 @@ package com.thesis.trainingapp.controller;
 import com.thesis.trainingapp.dto.MembershipDTO;
 import com.thesis.trainingapp.model.Membership;
 import com.thesis.trainingapp.service.MembershipService;
+import com.thesis.trainingapp.service.UserMembershipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/memberships")
 public class MembershipController {
     private final MembershipService membershipService;
+    private final UserMembershipService userMembershipService;
 
     @GetMapping
     public ResponseEntity<List<Membership>> getMemberships() {
@@ -28,6 +30,7 @@ public class MembershipController {
 
     @DeleteMapping("/{memId}")
     public ResponseEntity<String> deleteMembership(@PathVariable Long memId) {
+        userMembershipService.deleteUserMembershipsByMembershipId(memId);
         membershipService.delete(memId);
         return ResponseEntity.ok().body("Membership deleted.");
     }

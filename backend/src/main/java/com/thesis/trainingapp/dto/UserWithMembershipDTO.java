@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsersWithMembershipDTO {
+public class UserWithMembershipDTO {
     private UserDTO user;
     private UserMembership membership;
 }

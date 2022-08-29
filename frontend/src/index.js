@@ -16,6 +16,7 @@ import AddMembershipPage from './components/pages/addMembershipPage';
 import AddTrainingPage from './components/pages/addTrainingPage';
 import TrainingCalendar from './components/pages/trainingCalendarPage';
 import TrainingList from './components/pages/trainingListPage';
+import UserProfileForAdmin from './components/pages/userProfileForAdminPage';
 
 axios.interceptors.request.use(
   request => {
@@ -83,6 +84,7 @@ root.render(
       <Route path='addTraining' element={<AddTrainingPage />} />
       <Route path='calendar' element={<TrainingCalendar />} />
       <Route path='trainings' element={<TrainingList />} />
+      <Route path='user/:username' element={<UserProfileForAdmin />} />
     </Routes>
   </BrowserRouter>
 );

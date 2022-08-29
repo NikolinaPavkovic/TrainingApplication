@@ -11,6 +11,7 @@ const DeleteReservation = ({modalIsOpen, setModalIsOpen, trainingId}) => {
             .then(response => {
                 console.log(response?.data);
                 setModalIsOpen(false);
+                window.location.reload(false);
             })
     }
 

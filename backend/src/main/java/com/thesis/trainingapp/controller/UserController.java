@@ -9,6 +9,8 @@ import com.thesis.trainingapp.dto.*;
 import com.thesis.trainingapp.filter.CustomAuthorizationFilter;
 import com.thesis.trainingapp.model.Role;
 import com.thesis.trainingapp.model.User;
+import com.thesis.trainingapp.model.UserMembership;
+import com.thesis.trainingapp.service.UserMembershipService;
 import com.thesis.trainingapp.service.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final UserMembershipService userMembershipService;
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getUsers(){
@@ -98,6 +101,17 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable Long userId){
         userService.deleteUser(userId);
         return ResponseEntity.ok().body("User deleted.");
+    }
+
+    @GetMapping("/getUserForAdmin/{username}")
+    public ResponseEntity<UserMembership> getUserForAdmin(@PathVariable String username) {
+        return ResponseEntity.ok().body(userMembershipService.get(username));
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<User> getUser(@PathVariable String username) {
+        User user = userService.getUser(username);
+        return ResponseEntity.ok().body(user);
     }
 
     @PostMapping("/saveRole")

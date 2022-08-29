@@ -57,6 +57,15 @@ public class UserMembershipServiceImpl implements UserMembershipService{
         return setExpiredMembershipsAndGetValidMembership(userMemberships);
     }
 
+    @Override
+    public void deleteUserMembershipsByMembershipId(Long memId) {
+        List<UserMembership> memberships = userMembershipRepository.findAll();
+        for (UserMembership membership : memberships) {
+            if(membership.getMembership().getId() == memId)
+                userMembershipRepository.deleteById(membership.getId());
+        }
+    }
+
     private UserMembership setExpiredMembershipsAndGetValidMembership(List<UserMembership> memberships) {
         UserMembership validMembership = null;
         for (UserMembership membership : memberships) {

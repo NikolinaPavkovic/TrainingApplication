@@ -9,4 +9,5 @@ public interface UserMembershipService {
     List<UserMembership> getMemberships();
     UserMembership save(UserMembershipDTO userMembershipDTO);
     UserMembership get(String username);
+    void deleteUserMembershipsByMembershipId(Long memId);
 }

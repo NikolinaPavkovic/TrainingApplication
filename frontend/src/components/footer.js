@@ -12,17 +12,17 @@ const Footer = () =>{
     return (
         <div className='max-w-[1240] mx-auto bg-black py-8 md:px-40 px-4 grid lg:grid-cols-3 gap-8 text-white' id='contact'>
             <div>
-                <img src={Logo} alt='/' className='md:w-72'/>
+                <img src={Logo} alt='/' className='md:w-72 mt-2 '/>
             </div>
             <div className='md:col-span-2'>
-                <h1 className='font-bold text-sm'>ŽELIM DA SE PRIJAVIM NA VAŠA EMAIL OBAVEŠTENJA</h1>
+                {/*<h1 className='font-bold text-sm'>ŽELIM DA SE PRIJAVIM NA VAŠA EMAIL OBAVEŠTENJA</h1>
                 <div className='flex flex-col sm:flex-row items-center justify-between w-full'>
                     <input type='email' placeholder='Enter email' className='flex p-3 w-full rounded-md text-black' />
                     <button className='bg-orange-500 rounded-md font-medium w-[200px] ml-3 my-6 px-6 py-3'>Obavesti me</button>
-                </div>
-                <div className='flex'>
+                </div>*/}
+                <div className='flex justify-end items-center'>
                     <div>
-                    <h1 className='w-full text-xl font-bold py-4'>Kontakt</h1>
+                    <h1 className='w-full text-xl font-bold'>Kontakt</h1>
                     <p>CODE GYM</p>
                     <p>Bulevar Mihajla Pupina 999</p>
                     <p>21000, Novi Sad</p>

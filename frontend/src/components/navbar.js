@@ -53,7 +53,7 @@ const Navbar = () => {
                     <div onClick={handleNav} className='block md:hidden'>
                         {!nav ? <AiOutlineClose size={20}/> : <AiOutlineMenu size={20}/> }
                     </div>
-                    <div className={!nav ? 'fixed left-0 top-0 w-[65%] h-full border-r border-r-gray-900 bg-[#ffffff] ease-in-out duration-500 md:hidden' : 'fixed left-[-100%]'}>
+                    <div className={!nav ? 'z-40 fixed left-0 top-0 w-[65%] h-full border-r border-r-gray-900 bg-[#ffffff] ease-in-out duration-500 md:hidden' : 'fixed left-[-100%]'}>
                     <img src={Logo} alt='Code gym' />
                         <ul className='uppercase p-4'>
                             <li className='p-4 border-b border-gray-600'><Link1 activeclassname='active' to='home' spy={true} smooth={true}>Početna </Link1></li>
@@ -79,7 +79,7 @@ const Navbar = () => {
                     <div onClick={handleNav} className='block md:hidden'>
                         {!nav ? <AiOutlineClose size={20}/> : <AiOutlineMenu size={20}/> }
                     </div>
-                    <div className={!nav ? 'fixed left-0 top-0 w-[65%] h-full border-r border-r-gray-900 bg-[#ffffff] ease-in-out duration-500 md:hidden' : 'fixed left-[-100%]'}>
+                    <div className={!nav ? 'z-40 fixed left-0 top-0 w-[65%] h-full border-r border-r-gray-900 bg-[#ffffff] ease-in-out duration-500 md:hidden' : 'fixed left-[-100%]'}>
                     <img src={Logo} alt='Code gym' />
                         <ul className='uppercase p-4'>
                             <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/profile' spy={true} smooth={true}>Profil </Link2></li>
@@ -91,6 +91,37 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>}
+
+            {role=='ROLE_ADMIN' && 
+                <div>
+                    <div className='flex justify-between items-center px-4 h-24 max-w-[1240px] mx-auto'>
+                        <img src={Logo} alt='Code gym' />
+                        <ul className='hidden md:flex'>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/profile' spy={true} smooth={true}>Profil </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/calendar' spy={true} smooth={true}>Raspored treninga </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/trainings' spy={true} smooth={true}>Treninzi </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/memberships' spy={true} smooth={true}>Članarine </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/users' spy={true} smooth={true}>Korisnici </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/scan' spy={true} smooth={true}>Skeniraj </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer' onClick={logout}>Odjavi se </li>
+                        </ul>
+                        <div onClick={handleNav} className='block md:hidden'>
+                            {!nav ? <AiOutlineClose size={20}/> : <AiOutlineMenu size={20}/> }
+                        </div>
+                        <div className={!nav ? 'z-40 fixed left-0 top-0 w-[65%] h-full border-r border-r-gray-900 bg-[#ffffff] ease-in-out duration-500 md:hidden' : 'fixed left-[-100%]'}>
+                        <img src={Logo} alt='Code gym' />
+                            <ul className='uppercase p-4'>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/profile' spy={true} smooth={true}>Profil </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/calendar' spy={true} smooth={true}>Raspored treninga </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/trainings' spy={true} smooth={true}>Treninzi </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/memberships' spy={true} smooth={true}>Članarine </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/users' spy={true} smooth={true}>Korisnici </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/scan' spy={true} smooth={true}>Skeniraj </Link2></li>
+                            <li className='p-4 hover:scale-110 hover:cursor-pointer' onClick={logout}>Odjavi se </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>}
 
         </div>
     )

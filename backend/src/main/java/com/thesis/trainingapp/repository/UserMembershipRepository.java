@@ -9,4 +9,6 @@ import java.util.List;
 public interface UserMembershipRepository extends JpaRepository<UserMembership, Long> {
     @Query("SELECT userMem FROM UserMembership userMem WHERE userMem.user.username = ?1 AND userMem.isExpired = false")
     List<UserMembership> getUnexpiredUserMembershipsByUserUsername(String username);
+
+    void deleteByMembershipId(Long membershipId);
 }

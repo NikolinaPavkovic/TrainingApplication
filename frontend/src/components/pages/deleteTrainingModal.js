@@ -9,6 +9,8 @@ const DeleteTraining = ({modalIsOpen, setModalIsOpen, trainingId}) => {
         axios.delete(SERVER_URL + '/trainings/deleteTraining/' + trainingId)
             .then(response => {
                 console.log(response?.data);
+                setModalIsOpen(false);
+                window.location.reload(false);
             })
     }
 

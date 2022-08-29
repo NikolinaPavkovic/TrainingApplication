@@ -57,6 +57,11 @@ public class TrainingController {
         return ResponseEntity.ok().body(trainingService.getTrainerTrainings(user.getName()));
     }
 
+    @GetMapping("/getTrainingsForAdmin")
+    public ResponseEntity<List<TrainingPeriodDTO>> getTrainingsForAdmin(){
+        return ResponseEntity.ok().body(trainingService.getTrainingsForAdmin());
+    }
+
     @DeleteMapping("/deleteReservation/{trainingId}")
     public ResponseEntity<String> deleteReservation(@PathVariable Long trainingId, Principal user){
         trainingService.deleteReservation(trainingId, user.getName());
