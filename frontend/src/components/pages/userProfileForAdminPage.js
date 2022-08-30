@@ -89,7 +89,7 @@ const UserProfileForAdmin = () => {
             }
             
             
-            {role == '' && <AccessDenied />}
+            {role != 'ROLE_ADMIN' && <AccessDenied />}
             <Footer />
         </div>
     )

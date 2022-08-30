@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from '../footer';
+import AccessDenied from './accessDeniedPage';
 
 const TrainingCalendar = () => {
     const SERVER_URL = process.env.REACT_APP_API;
@@ -100,7 +101,7 @@ const TrainingCalendar = () => {
         <div>
             <Navbar />
             <ToastContainer />
-            <div className='p-8 md:p-16 max-w-[1240] flex justify-center items-center bg-gray-500 min-h-screen'>
+            {role !='' && <div className='p-8 md:p-16 max-w-[1240] flex justify-center items-center bg-gray-500 min-h-screen'>
                 <div className='p-8 bg-white shadow w-full rounded-xl relative'>
                 <Calendar 
                     events={periods}
@@ -126,7 +127,8 @@ const TrainingCalendar = () => {
                         )) }
                     </div>}
                 </div>
-            </div>
+            </div>}
+            {role=='' && <AccessDenied />}
             <Footer />
             
         </div>

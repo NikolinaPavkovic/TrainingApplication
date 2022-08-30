@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../footer';
 import Navbar from '../navbar';
 import Logo from '../../assets/logo.jpg'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AccessDenied from './accessDeniedPage';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddMembershipPage = () => {
     const SERVER_URL = process.env.REACT_APP_API;
@@ -14,6 +17,7 @@ const AddMembershipPage = () => {
     const [durationInDays, setDurationInDays] = useState(0);
     const [benefits, setBenefits] = useState([]);
     const [benefit, setBenefit] = useState('');
+    const [role, setRole] = useState('');
 
     const addMembershipDTO = {
         name,
@@ -22,11 +26,24 @@ const AddMembershipPage = () => {
         benefits
     }
 
+    useEffect(() => {
+        axios.get(SERVER_URL + '/users/getLoggedUser')
+        .then(response => {
+            if(response?.status !== 204) {
+                setRole(response?.data.roles[0]);
+            }
+        }).catch(response => {
+            console.log(response);
+        })
+      }, [])
+
     const addMembership = (e) => {
         e.preventDefault();
         axios.post(SERVER_URL + '/memberships', addMembershipDTO)
         .then(response => {
             console.log(response?.data);
+            toast.success('Uspešno ste dodali članarinu!')
+            navigate('/memberships');
         }).catch(reason => {
             console.log(reason)
         })
@@ -42,7 +59,8 @@ const AddMembershipPage = () => {
     return (
         <div>
             <Navbar />
-            <div className='max-w-[1240] min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-5 border-t-2'>
+            <ToastContainer />
+            {role=='ROLE_ADMIN' && <div className='max-w-[1240] min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-5 border-t-2'>
                 <div className='max-w-[600px] w-full p-10 bg-white rounded-xl z-10 shadow-xl border'>
                 <img src={Logo} alt='Code gym' className='mx-auto'/>
                     <div className='text-center'>
@@ -86,7 +104,8 @@ const AddMembershipPage = () => {
                         
                     </form>
                 </div>
-            </div>
+            </div>}
+            {role != "ROLE_ADMIN" && <AccessDenied />}
             <Footer />
         </div>
     )

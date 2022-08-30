@@ -28,7 +28,7 @@ const Register = () => {
         axios.get(SERVER_URL + '/users/getLoggedUser')
         .then(response => {
             if(response?.status !== 204) {
-                navigate('profile');
+                navigate('/profile');
             }
         }).catch(response => {
             console.log(response);

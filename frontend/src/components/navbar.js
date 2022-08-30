@@ -43,7 +43,7 @@ const Navbar = () => {
             {role == '' && 
             <div>
                 <div className='flex justify-between items-center px-4 h-24 max-w-[1240px] mx-auto'>
-                    <img src={Logo} alt='Code gym' />
+                    <Link2 to='/'><img src={Logo} alt='Code gym' /> </Link2>
                     <ul className='hidden md:flex'>
                         <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link1 activeclassname='active' to='home' spy={true} smooth={true}>Početna </Link1></li>
                         <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link1 to='about' spy={true} smooth={true}> O nama </Link1></li>
@@ -68,7 +68,7 @@ const Navbar = () => {
             {role == 'ROLE_USER' && 
             <div>
                 <div className='flex justify-between items-center px-4 h-24 max-w-[1240px] mx-auto'>
-                    <img src={Logo} alt='Code gym' />
+                    <Link2 to='/'><img src={Logo} alt='Code gym' /></Link2>
                     <ul className='hidden md:flex'>
                         <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/profile' spy={true} smooth={true}>Profil </Link2></li>
                         <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/calendar' spy={true} smooth={true}>Raspored treninga </Link2></li>
@@ -95,7 +95,7 @@ const Navbar = () => {
             {role=='ROLE_ADMIN' && 
                 <div>
                     <div className='flex justify-between items-center px-4 h-24 max-w-[1240px] mx-auto'>
-                        <img src={Logo} alt='Code gym' />
+                        <Link2 to='/'> <img src={Logo} alt='Code gym' /> </Link2>
                         <ul className='hidden md:flex'>
                             <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/profile' spy={true} smooth={true}>Profil </Link2></li>
                             <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/calendar' spy={true} smooth={true}>Raspored treninga </Link2></li>
@@ -126,7 +126,7 @@ const Navbar = () => {
                 {role=='ROLE_TRAINER' && 
                 <div>
                     <div className='flex justify-between items-center px-4 h-24 max-w-[1240px] mx-auto'>
-                        <img src={Logo} alt='Code gym' />
+                        <Link2 to='/'><img src={Logo} alt='Code gym' /> </Link2>
                         <ul className='hidden md:flex'>
                             <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/profile' spy={true} smooth={true}>Profil </Link2></li>
                             <li className='p-4 hover:scale-110 hover:cursor-pointer'> <Link2 to='/calendar' spy={true} smooth={true}>Raspored treninga </Link2></li>

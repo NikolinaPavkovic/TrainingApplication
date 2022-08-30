@@ -7,6 +7,7 @@ import DeleteUser from './deleteUserModal';
 import { useNavigate } from 'react-router-dom';
 import {AiOutlineDelete} from 'react-icons/ai';
 import UserProfile from './userProfilePage';
+import AccessDenied from './accessDeniedPage';
 
 const UserList = () => {
     const SERVER_URL = process.env.REACT_APP_API;
@@ -15,14 +16,23 @@ const UserList = () => {
     const [search, setSearch] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [userId, setUserId] = useState('');
+    const [roleLogged, setRoleLogged] = useState('');
 
     useEffect(() => {
-        axios.get(SERVER_URL + '/users')
+        axios.get(SERVER_URL + '/users/getLoggedUser')
         .then(response => {
-            setUsers(response?.data);
-            console.log(response?.data)
+            if(response?.status !== 204) {
+                setRoleLogged(response?.data.roles[0]);
+                axios.get(SERVER_URL + '/users')
+                .then(resp => {
+                    setUsers(resp?.data);
+                    console.log(resp?.data)
+                }).catch(reason => {
+                    console.log(reason)
+                })
+            }
         }).catch(reason => {
-            console.log(reason)
+            console.log(reason);
         })
     }, [])
 
@@ -67,7 +77,7 @@ const UserList = () => {
     return(
         <div>
             <Navbar />
-            <div className='w-full py-[3rem] px-4 bg-gray-500'>
+            {roleLogged=='ROLE_ADMIN' && <div className='w-full py-[3rem] px-4 bg-gray-500'>
                 <div className='max-w-[1240px] mx-auto mb-4 flex flex-row justify-center'>
                     <div className='flex w-[70%]'>
                         <button className='bg-orange-400 text-white rounded-md font-medium w-[200px] px-6 py-3' onClick={addTrainer}>Dodaj trenera</button>
@@ -101,8 +111,9 @@ const UserList = () => {
                     </div>
                     }
                 </div>
-            </div>
+            </div>}
             <DeleteUser modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} userId={userId}/>
+            {roleLogged != 'ROLE_ADMIN' && <AccessDenied />}
             <Footer />
         </div>
     )

@@ -27,6 +27,7 @@ public class Training {
 
     @Column(name = "start_date")
     private Date startDate;
+
     @Column(name = "duration")
     private Integer duration;
 

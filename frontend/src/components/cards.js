@@ -13,12 +13,16 @@ const Cards = () => {
     const [role, setRole] = useState('');
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [membershipId, setMembershipId] = useState(0);
+    const [loggedUser, setLoggedUser] = useState([]);
+    const [isLogged, setIsLogged] = useState(false);
 
     useEffect(() => {
         axios.get(SERVER_URL + '/users/getLoggedUser')
         .then(response => {
             if(response?.status !== 204) {
                 setRole(response?.data?.roles[0]);
+                setIsLogged(true);
+                setLoggedUser(response?.data)
             }
         })
         .catch(reason =>{
@@ -35,21 +39,16 @@ const Cards = () => {
       }, [])
 
     const reserveMembership = (id) => {
-        axios.get(SERVER_URL + '/users/getLoggedUser')
-        .then(response => {
-            if(response?.status === 204) { // ako korisnik nije ulogovan
-                navigate('/login');
-            } else { //ako jeste
-                axios.post(SERVER_URL + '/userMemberships', {userId: response?.data?.id, membershipId: id})
-                .then(response => {
-                    if(response?.data == 'User membership already exists.') {
-                        toast.warn('Već imate važeću članarinu.')
-                    }
-                })
-            }
-        }).catch(response => {
-            console.log(response);
-        })
+        if(!isLogged) { // ako korisnik nije ulogovan
+            navigate('/login');
+        } else { //ako jeste
+            axios.post(SERVER_URL + '/userMemberships', {userId: loggedUser.id, membershipId: id})
+            .then(response => {
+                if(response?.data == 'User membership already exists.') {
+                    toast.warn('Već imate važeću članarinu.')
+                }
+            })
+        }
     }
 
     const addMembership = () => {

@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../footer';
 import Navbar from '../navbar';
 import Logo from '../../assets/logo.jpg'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AccessDenied from './accessDeniedPage';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterTrainer = () => {
     const SERVER_URL = process.env.REACT_APP_API;
@@ -14,6 +17,7 @@ const RegisterTrainer = () => {
     const [phone, setPhone] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('');
 
     const registerDTO = {
         firstname,
@@ -23,13 +27,25 @@ const RegisterTrainer = () => {
         password
     }
 
+    useEffect(() => {
+        axios.get(SERVER_URL + '/users/getLoggedUser')
+        .then(response => {
+            if(response?.status !== 204) {
+                setRole(response?.data.roles[0]);
+            }
+        }).catch(response => {
+            console.log(response);
+        })
+      }, [])
+
     const register = (e) => {
         e.preventDefault();
         console.log(registerDTO)
         axios.post(SERVER_URL + '/users/registerTrainer', registerDTO)
         .then(response => {
             console.log(response?.data)
-            navigate('users')
+            navigate('/users')
+            toast.success('Uspešno ste registrovali trenera.');
         })
         .catch(response => {
             console.log(response)
@@ -40,7 +56,9 @@ const RegisterTrainer = () => {
     return(
         <div>
             <Navbar />
-            <div className='max-w-[1240] min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-5 border-t-2'>
+            <ToastContainer />
+
+            {role == 'ROLE_ADMIN' && <div className='max-w-[1240] min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-5 border-t-2'>
                 <div className='max-w-[600px] w-full p-10 bg-white rounded-xl z-10 shadow-xl border'>
                 <img src={Logo} alt='Code gym' className='mx-auto'/>
                     <div className='text-center'>
@@ -77,7 +95,10 @@ const RegisterTrainer = () => {
                         
                     </form>
                 </div>
-            </div>
+            </div>}
+
+            {role!='ROLE_ADMIN' && <AccessDenied />}
+
             <Footer />
         </div>
     )

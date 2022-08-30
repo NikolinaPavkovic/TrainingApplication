@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AccessDenied from './accessDeniedPage';
 
 const AddTrainingPage = () => {
     const SERVER_URL = process.env.REACT_APP_API;
@@ -105,7 +106,8 @@ const AddTrainingPage = () => {
         <div>
             <Navbar />
             <ToastContainer />
-            <div className='max-w-[1240] min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-5 border-t-2'>
+            
+            {(role=='ROLE_ADMIN' || role=='ROLE_TRAINER') && <div className='max-w-[1240] min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-5 border-t-2'>
                 <div className='max-w-[600px] w-full p-10 bg-white rounded-xl z-10 shadow-xl border'>
                     <div className='text-center'>
                         <h2 className='mt-6 text-3xl font-bold text-gray-900'>Zakaži trening</h2>
@@ -151,7 +153,10 @@ const AddTrainingPage = () => {
                         
                     </form>
                 </div>
-            </div>
+            </div>}
+
+            {(role != 'ROLE_ADMIN' && role != 'ROLE_TRAINER') && <AccessDenied />}
+
             <Footer />
         </div>
     )
